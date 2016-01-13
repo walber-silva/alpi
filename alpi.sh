@@ -220,6 +220,14 @@ opcao=$(
 
 	elif [ "$opcao" == "3" ]; then
 	clear
+	if [ "$(id -u)" == "0" ]; then
+	echo ""
+	echo "--- :( ----------------------------------------------"
+	echo ""
+	echo "    Voce nao pode continuar sendo root."
+	echo ""
+	exit 1
+	fi
 	programas
 
 	elif [ "$opcao" == "4" ]; then
