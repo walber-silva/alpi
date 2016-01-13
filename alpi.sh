@@ -7,6 +7,7 @@
 # Last Updated: 20/12/2015
 ##################################################
 #
+pacman -Syu --noconfirm
 pacman -S --needed dialog --noconfirm
 
 program(){
