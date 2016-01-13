@@ -7,6 +7,16 @@
 # Last Updated: 20/12/2015
 ##################################################
 #
+#Verificando se o pacman esta sendo usado por outro processo
+FILE="/var/lib/pacman/db.lck"
+if [ -e "$FILE" ] ; then
+echo "-> Pacman esta sendo usado por outro processo.."
+echo "-> Parando processo.."
+rm /var/lib/pacman/db.lck
+else
+echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
+fi
+
 pacman -Syu --noconfirm
 pacman -S --needed dialog --noconfirm
 
