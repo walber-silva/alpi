@@ -9,12 +9,23 @@
 #
 
 #CONFIGURACAO PADRAO - IDIOMA PT-BR - TECLADO ABNT2
+LOCALEGEN="/etc/locale.gen"
+if [ -e "$LOCALEGEN" ] ; then
+echo "-> Atualizando configuracoes de Locale.gen para pt_BR..."
 cat /etc/locale.gen | grep -v "pt_BR.UTF-8 UTF-8" > /etc/locale.tmp
 rm -f /etc/locale.gen
 mv /etc/locale.tmp /etc/locale.gen
 echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
+else
+echo "-> Criando configuracoes para Locale.gen pt_BR..."
+echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
+locale-gen
+fi
 
+LOCALECONF="/etc/locale.conf"
+if [ -e "$LOCALECONF" ] ; then
+echo "-> Atualizando configuracoes de Locale.conf para pt_BR..."
 cat /etc/locale.conf | grep -v LANG=pt_BR.UTF-8 > /etc/locale.tmp
 rm -f /etc/locale.conf
 mv /etc/locale.tmp /etc/locale.conf
@@ -22,19 +33,28 @@ echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
 export LANG=pt_BR.UTF-8
 rm -f /etc/localtime
 ln -s /usr/share/zoneinfo/Brazil/East /etc/localtime
+else
+echo "-> Criando configuracoes para Locale.conf pt_BR..."
+echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
+export LANG=pt_BR.UTF-8
+rm -f /etc/localtime
+ln -s /usr/share/zoneinfo/Brazil/East /etc/localtime
+fi
+
 
 #Atualiza Configuracoes do pacman
+echo "-> Atualizando configuracoes do pacman..."
 rm -f /etc/pacman.conf
 cp pacman.conf /etc/
 
 #Verificando se o pacman esta sendo usado por outro processo
 FILE="/var/lib/pacman/db.lck"
 if [ -e "$FILE" ] ; then
-echo "Pacman esta sendo usado por outro processo.."
-echo "Parando processo.."
+echo "-> Pacman esta sendo usado por outro processo.."
+echo "-> Parando processo.."
 rm /var/lib/pacman/db.lck
 else
-echo "[OK] Pacman nao esta sendo usado por nenhum processo.."
+echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
 
@@ -86,7 +106,7 @@ pacman -S --needed dosfstools ntfs-3g nilfs-utils mtools f2fs-tools exfat-utils 
 pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools vlc smplayer --noconfirm
 
 #Install Yaourt
-echo "Instalando Yaourt..."
+echo "-> Instalando Yaourt..."
 pacman -U *.pkg.tar.xz --noconfirm
 
 #VirtualBox ---------------------------------------------------------
@@ -95,18 +115,18 @@ pacman -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox
 #Verificando se existe o arquivo de configuracao do virtualbox
 FILE="/etc/modules-load.d/virtualbox.conf"
 if [ -e "$FILE" ] ; then
-echo "Arquivo existe.."
-echo "Removendo arquivo.."
+echo "-> Arquivo existe.."
+echo "-> Removendo arquivo.."
 rm -f /etc/modules-load.d/virtualbox.conf
-echo "Atualizando arquivo..."
+echo "-> Atualizando arquivo..."
 echo "vboxdrv" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxnetadp" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxnetflt" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxpci" >> /etc/modules-load.d/virtualbox.conf
 gpasswd -a $USER vboxusers
 else
-echo "Nao existe arquivo de configuracao do virtualbox"
-echo "Criando arquivo..."
+echo "-> Nao existe arquivo de configuracao do virtualbox"
+echo "-> Criando arquivo..."
 echo "vboxdrv" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxnetadp" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxnetflt" >> /etc/modules-load.d/virtualbox.conf

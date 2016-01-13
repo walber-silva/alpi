@@ -14,10 +14,10 @@ yaourt='https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz'
 #Verifica se yaourt esta instalado
 verify=$(which yaourt)
 if [ "$verify" == "/usr/bin/yaourt" ]; then
-echo '[OK] Yaourt esta instalado...'
+echo '-> [OK] Yaourt esta instalado...'
 else
-echo 'Yaourt nao esta instalado. :('
-echo 'Instalando Yaourt...'
+echo '-> Yaourt nao esta instalado. :('
+echo '-> Instalando Yaourt...'
 wget $packagequery $yaourt
 tar -xf package-query.tar.gz
 tar -xf yaourt.tar.gz 
