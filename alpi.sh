@@ -4,7 +4,6 @@
 # Description: Pos Installation for Arch Linux
 # Script Maintainer: ALT Project
 #
-# Last Updated: 12/01/2016
 ##################################################
 #
 #Verificando se o pacman esta sendo usado por outro processo

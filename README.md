@@ -1,5 +1,5 @@
 ### Copyright (c) 2015 ALT Project 
-### Arch Linux Pos Installation Beta (alpi)
+### Arch Linux Pos Installation (alpi) - Beta
 
 ![screenshot](https://github.com/tiagorlampert/alpi/blob/master/screenshot.png)
 
