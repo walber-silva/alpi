@@ -17,8 +17,140 @@ else
 echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
+#Verifica se e root para usar pacman
+if [ "$(id -u)" == "0" ]; then
 pacman -Syu --noconfirm
 pacman -S --needed dialog --noconfirm
+echo "-> Voce esta executando como root."
+fi
+
+#Verifica se nao e root para usar yaourt
+if [ "`whoami`" != "root" ];
+then
+yaourt -Syua --noconfirm
+yaourt -S --needed dialog --noconfirm
+echo "-> Voce nao esta executando como root."
+fi
+
+
+menu(){
+
+opcao=$(
+      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Menu'  \
+             --menu 'Selecione a opcao:' \
+            0 0 0                   \
+            1 'Instalacao padrao [PT-BR - GNOME] (#ROOT)' \
+	    2 'Instalacao completa padrao ($NO-ROOT)' \
+	    3 'Programas' \
+	    4 'Reiniciar'	\
+	    5 'Sobre'	\
+            0 'Sair'                )
+
+	opcao=$opcao
+
+	[ $? -ne 0 ] && break
+
+	if [ "$opcao" == "1" ]; then
+	#Verifica se esta executando como ROOT
+	checkRootUser() {
+
+    	if [ "`whoami`" != "root" ];
+      	then
+	clear
+        echo ""
+        echo "--- :( ----------------------------------------------"
+        echo ""
+        echo "    Voce precisa ser root para continuar."
+        echo ""
+        exit 1
+   	fi
+	}
+
+	#alias
+	checkInstallUser() {
+	checkRootUser
+	}
+
+	checkInstallUser
+	#Verifica se esta executando como ROOT
+	clear
+	cd src
+	sh install.sh
+	cd ..
+	
+	menu
+
+	elif [ "$opcao" == "2" ]; then
+	clear
+	if [ "$(id -u)" == "0" ]; then
+	echo ""
+	echo "--- :( ----------------------------------------------"
+	echo ""
+	echo "    Voce nao pode continuar sendo root."
+	echo ""
+	exit 1
+	fi
+	cd src
+	sh installyaourt.sh
+	cd ..
+
+	menu
+
+	elif [ "$opcao" == "3" ]; then
+	clear
+	if [ "$(id -u)" == "0" ]; then
+	echo ""
+	echo "--- :( ----------------------------------------------"
+	echo ""
+	echo "    Voce nao pode continuar sendo root."
+	echo ""
+	exit 1
+	fi
+	programas
+
+	elif [ "$opcao" == "4" ]; then
+	reboot
+
+	menu
+
+	elif [ "$opcao" == "0" ]; then
+	echo "Saindo do programa..."	
+	exit
+
+	menu
+	elif [ "$opcao" == "5" ]; then
+	dialog --title 'Sobre' --msgbox '\n
+	\n
+	########################################################################\n
+	#                                                                      #\n
+	#         ALT Project - Arch Linux Pos Installation (alpi)             #\n
+	#                                                                      #\n
+	########################################################################\n	
+	\n	
+      	\n
+	Arch Linux Pos Instalacao (alpi), e uma ferramenta que permite facilitar a
+	configuracao do sistema Arch Linux apos a sua instalacao. Focada para iniciantes
+	na distribuicao e para usuarios experientes que querem automatizar a tarefa de
+	configuracao do sistema.\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	                    Copyright (c) 2016 ALT Project\n
+	' 25 80
+
+	menu
+
+
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
 #MULTIMIDIA
 multimidia(){
 
@@ -153,115 +285,3 @@ fi
 }
 menu
 
-menu(){
-
-opcao=$(
-      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
-	     --stdout               \
-             --title 'Menu'  \
-             --menu 'Selecione a opcao:' \
-            0 0 0                   \
-            1 'Instalacao padrao [PT-BR - GNOME] (#ROOT)' \
-	    2 'Instalacao completa padrao ($NO-ROOT)' \
-	    3 'Programas' \
-	    4 'Reiniciar'	\
-	    5 'Sobre'	\
-            0 'Sair'                )
-
-	opcao=$opcao
-
-	[ $? -ne 0 ] && break
-
-	if [ "$opcao" == "1" ]; then
-	#Verifica se esta executando como ROOT
-	checkRootUser() {
-
-    	if [ "`whoami`" != "root" ];
-      	then
-	clear
-        echo ""
-        echo "--- :( ----------------------------------------------"
-        echo ""
-        echo "    Voce precisa ser root para continuar."
-        echo ""
-        exit 1
-   	fi
-	}
-
-	#alias
-	checkInstallUser() {
-	checkRootUser
-	}
-
-	checkInstallUser
-	#Verifica se esta executando como ROOT
-	clear
-	cd src
-	sh install.sh
-	cd ..
-	
-	menu
-
-	elif [ "$opcao" == "2" ]; then
-	clear
-	if [ "$(id -u)" == "0" ]; then
-	echo ""
-	echo "--- :( ----------------------------------------------"
-	echo ""
-	echo "    Voce nao pode continuar sendo root."
-	echo ""
-	exit 1
-	fi
-	cd src
-	sh installyaourt.sh
-	cd ..
-
-	menu
-
-	elif [ "$opcao" == "3" ]; then
-	clear
-	if [ "$(id -u)" == "0" ]; then
-	echo ""
-	echo "--- :( ----------------------------------------------"
-	echo ""
-	echo "    Voce nao pode continuar sendo root."
-	echo ""
-	exit 1
-	fi
-	programas
-
-	elif [ "$opcao" == "4" ]; then
-	reboot
-
-	menu
-
-	elif [ "$opcao" == "5" ]; then
-	dialog --title 'Sobre' --msgbox '\n
-	\n
-	########################################################################\n
-	#                                                                      #\n
-	#         ALT Project - Arch Linux Pos Installation (alpi)             #\n
-	#                                                                      #\n
-	########################################################################\n	
-	\n	
-      	\n
-	Arch Linux Pos Instalacao (alpi), e uma ferramenta que permite facilitar a
-	configuracao do sistema Arch Linux apos a sua instalacao. Focada para iniciantes
-	na distribuicao e para usuarios experientes que querem automatizar a tarefa de
-	configuracao do sistema.\n
-	\n
-	\n
-	\n
-	\n
-	\n
-	                    Copyright (c) 2016 ALT Project\n
-	' 25 80
-
-	menu
-
-
-else 
-echo 'Saindo do programa...'
-fi
-}
-menu

@@ -11,6 +11,15 @@
 packagequery='https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz'
 yaourt='https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz'
 
+if [ "$(id -u)" == "0" ]; then
+echo ""
+echo "--- :( ----------------------------------------------"
+echo ""
+echo "    Voce nao pode continuar sendo root."
+echo ""
+exit 1
+fi
+
 #Verifica se yaourt esta instalado
 verify=$(which yaourt)
 if [ "$verify" == "/usr/bin/yaourt" ]; then

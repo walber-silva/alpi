@@ -7,6 +7,16 @@
 # Last Updated: 12/01/2016
 ##################################################
 #
+if [ "`whoami`" != "root" ];
+then
+clear
+echo ""
+echo "--- :( ----------------------------------------------"
+echo ""
+echo "    Voce precisa ser root para continuar."
+echo ""
+exit 1
+fi
 
 #CONFIGURACAO PADRAO - IDIOMA PT-BR - TECLADO ABNT2
 LOCALEGEN="/etc/locale.gen"
@@ -58,6 +68,7 @@ echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
 
+#echo "Adicionando usuario ao Sudoers"
 #echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
 
 #Permissao Usuario
