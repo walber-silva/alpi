@@ -22,7 +22,7 @@ fi
 
 #Verifica se yaourt esta instalado
 verify=$(which yaourt)
-if [ "$verify" == "/usr/bin/yaourt" ]; then
+if [ "$verify" == "/usr/bin/yaourt" ] || [ "$verify" == "/usr/sbin/yaourt" ]; then
 echo '-> [OK] Yaourt esta instalado...'
 else
 echo '-> Yaourt nao esta instalado. :('
