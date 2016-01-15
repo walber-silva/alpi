@@ -1,7 +1,7 @@
 #!/bin/bash
 ##################################################
-# Name: Arch Linux Pos Installation (alpi)
-# Description: Pos Installation for Arch Linux
+# Name: Arch Linux Post Installation (alpi)
+# Description: Pos Instalacao para Arch Linux
 # Script Maintainer: ALT Project
 #
 ##################################################
@@ -66,7 +66,7 @@ fi
 programas(){
 
 programas=$(
-      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
 	     --stdout               \
              --title 'Instalar Programas'  \
              --menu 'Selecione a categoria:' \
@@ -106,7 +106,7 @@ menu
 multimidia(){
 
 multimidia=$(
-      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
 	     --stdout               \
              --title 'Multimidia'  \
              --menu 'Selecione o programa para instalar:' \
@@ -149,7 +149,7 @@ menu
 navegadores(){
 
 navegadores=$(
-      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
 	     --stdout               \
              --title 'Navegadores'  \
              --menu 'Selecione o programa para instalar:' \
@@ -204,7 +204,7 @@ menu
 desenvolvimento(){
 
 desenvolvimento=$(
-      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
 	     --stdout               \
              --title 'Desenvolvimento'  \
              --menu 'Selecione o programa para instalar:' \
@@ -277,7 +277,7 @@ menu
 outros(){
 
 outros=$(
-      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
 	     --stdout               \
              --title 'Outros'  \
              --menu 'Selecione o programa para instalar:' \
@@ -324,7 +324,7 @@ menu
 menu(){
 
 opcao=$(
-      dialog --backtitle ' Arch Linux Pos Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
 	     --stdout               \
              --title 'Menu'  \
              --menu 'Selecione a opcao:' \
@@ -450,12 +450,12 @@ opcao=$(
 	\n
 	########################################################################\n
 	#                                                                      #\n
-	#         ALT Project - Arch Linux Pos Installation (alpi)             #\n
+	#        ALT Project - Arch Linux Post Installation (alpi)             #\n
 	#                                                                      #\n
 	########################################################################\n	
 	\n	
       	\n
-	Arch Linux Pos Instalacao (alpi), e uma ferramenta que permite facilitar a
+	Arch Linux Post Installation (alpi), e uma ferramenta que permite facilitar a
 	configuracao do sistema Arch Linux apos a sua instalacao. Focada para iniciantes
 	na distribuicao e para usuarios experientes que querem automatizar a tarefa de
 	configuracao do sistema.\n

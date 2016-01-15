@@ -1,7 +1,7 @@
 #!/bin/bash
 ##################################################
-# Name: Arch Linux Pos Installation (alpi)
-# Description: Pos Installation for Arch Linux
+# Name: Arch Linux Post Installation (alpi)
+# Description: Pos Instalacao para Arch Linux
 # Script Maintainer: ALT Project
 #
 ##################################################
