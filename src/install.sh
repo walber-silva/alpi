@@ -17,7 +17,7 @@ echo ""
 exit 1
 fi
 
-#CONFIGURACAO PADRAO - IDIOMA PT-BR - TECLADO ABNT2
+#CONFIGURACAO PADRAO - IDIOMA PT-BR - TECLADO ABNT2 - GNOME - Driver de Video Intel
 LOCALEGEN="/etc/locale.gen"
 if [ -e "$LOCALEGEN" ] ; then
 echo "-> Atualizando configuracoes de Locale.gen para pt_BR..."

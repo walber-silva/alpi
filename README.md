@@ -44,4 +44,4 @@ Send a e-mail to trepmalogait@gmail.com
 
 ### License
 
-**Arch Linux Pos Installation (alpi)** use the [GPL](LICENSE).
+**Arch Linux Post Installation (alpi)** use the [GPL](LICENSE).
