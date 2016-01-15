@@ -128,16 +128,19 @@ multimidia=$(
 	if [ "$multimidia" == "1" ]; then
 	clear
 	yaourt -S --needed vlc --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	multimidia
 
 	elif [ "$multimidia" == "2" ]; then
 	clear
 	yaourt -S --needed smplayer --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	multimidia
 
 	elif [ "$multimidia" == "3" ]; then
 	clear
 	yaourt -S --needed rhythmbox-git --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	multimidia
 
 	elif [ "$multimidia" == "6" ]; then
@@ -163,7 +166,7 @@ navegadores=$(
 	    3 'Chromium' \
 	    4 'Iceweasel' \
 	    5 'Opera' \
-	    6 'Voltar' \
+	    6 'Voltar' \echo; echo "-> Precione enter para continuar"; read
             0 'Sair'                )
 
 	navegadores=$navegadores
@@ -173,26 +176,31 @@ navegadores=$(
 	if [ "$navegadores" == "1" ]; then
 	clear
 	yaourt -S --needed firefox firefox gst-libav gst-plugins-good upower --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	navegadores
 
 	elif [ "$navegadores" == "2" ]; then
 	clear
 	yaourt -S google-chrome --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	navegadores
 
 	elif [ "$navegadores" == "3" ]; then
 	clear
 	yaourt -S --needed chromium --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	navegadores
 
 	elif [ "$navegadores" == "4" ]; then
 	clear
 	yaourt -S --needed iceweasel --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	navegadores
 
 	elif [ "$navegadores" == "5" ]; then
 	clear
 	yaourt -S --needed opera --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	navegadores
 
 	elif [ "$navegadores" == "6" ]; then
