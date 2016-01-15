@@ -74,7 +74,8 @@ programas=$(
             1 'Navegadores' \
 	    2 'Multimidia' \
 	    3 'Desenvolvimento' \
-	    4 'Outros' \
+	    4 'Aparencia e Personalizacao' \
+            5 'Outros' \
 	    9 'Voltar' \
             0 'Sair'                )
 
@@ -92,6 +93,9 @@ programas=$(
 	desenvolvimento
 
 	elif [ "$programas" == "4" ]; then
+	aparencia
+
+	elif [ "$programas" == "5" ]; then
 	outros
 
 	elif [ "$programas" == "9" ]; then
@@ -273,6 +277,176 @@ fi
 }
 menu
 
+#APARENCIA E PERSONALIZACAO
+aparencia(){
+
+aparencia=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Aparencia e Personalizacao'  \
+             --menu 'Selecione a categoria para prosseguir:' \
+            0 0 0                   \
+            1 'Temas' \
+	    2 'Icones' \
+	    3 'Cursores' \
+	    4 'Voltar' \
+            0 'Sair'                )
+
+	[ $? -ne 0 ] && break
+
+	if [ "$aparencia" == "1" ]; then
+	clear
+	temas
+	aparencia
+
+	elif [ "$aparencia" == "2" ]; then
+	clear
+	icones
+	aparencia
+
+	elif [ "$aparencia" == "3" ]; then
+	clear
+	cursor
+	aparencia
+
+	elif [ "$aparencia" == "4" ]; then
+	clear
+	programas
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
+#TEMAS
+temas(){
+
+temas=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Temas'  \
+             --menu 'Selecione o tema para instalar:' \
+            0 0 0                   \
+            1 'Theme Arc' \
+	    2 'Theme Numix' \
+	    3 'Theme Numix Frost' \
+	    4 'Voltar'   )
+
+	[ $? -ne 0 ] && break
+
+	if [ "$temas" == "1" ]; then
+	clear
+	yaourt -S gtk-theme-arc-git --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	temas
+
+	elif [ "$temas" == "2" ]; then
+	clear
+	yaourt -S --needed numix-themes --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	temas
+
+	elif [ "$temas" == "3" ]; then
+	clear
+	yaourt -S --needed numix-frost-themes --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	temas
+
+	elif [ "$tic" == "4" ]; then
+	clear
+	tic
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
+#ICONES
+icones(){
+
+icones=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Icones'  \
+             --menu 'Selecione o icone para instalar:' \
+            0 0 0                   \
+            1 'Numix Icon' \
+	    2 'Numix Circle Icon' \
+	    3 'Vibrancy Colors Icon' \
+	    4 'Voltar' )
+
+	[ $? -ne 0 ] && break
+
+	if [ "$icones" == "1" ]; then
+	clear
+	yaourt -S numix-icon-theme-git --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	icones
+
+	elif [ "$icones" == "2" ]; then
+	clear
+	yaourt -S numix-circle-icon-theme-git --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	icones
+
+	elif [ "$icones" == "3" ]; then
+	clear
+	yaourt -S vibrancy-colors --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	icones
+
+	elif [ "$icones" == "4" ]; then
+	clear
+	tic
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
+#CURSOR
+cursor(){
+
+cursor=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Cursores'  \
+             --menu 'Selecione o cursor para instalar:' \
+            0 0 0                   \
+            1 'Breeze Obsidian Cursor' \
+	    2 'Breeze Snow Cursor' \
+	    3 'Breeze Hacked Cursor' \
+	    4 'Voltar' )
+
+	[ $? -ne 0 ] && break
+
+	if [ "$cursor" == "1" ]; then
+	clear
+	yaourt -S breeze-obsidian-cursor-theme --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	cursor
+
+	elif [ "$cursor" == "2" ]; then
+	clear
+	yaourt -S breeze-snow-cursor-theme --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	cursor
+
+	elif [ "$cursor" == "3" ]; then
+	clear
+	yaourt -S breeze-hacked-cursor-theme --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	cursor
+
+	elif [ "$cursor" == "4" ]; then
+	clear
+	tic
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
 #OUTROS
 outros(){
 
@@ -294,21 +468,25 @@ outros=$(
 	if [ "$outros" == "1" ]; then
 	clear
 	yaourt -S --needed teamviewer --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	outros
 
 	elif [ "$outros" == "2" ]; then
 	clear
 	yaourt -S --needed anydesk --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	outros
 
 	elif [ "$outros" == "3" ]; then
 	clear
 	yaourt -S jre --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	outros
 
 	elif [ "$outros" == "4" ]; then
 	clear
 	yaourt -S jdk --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
 	outros
 
 	elif [ "$outros" == "6" ]; then
