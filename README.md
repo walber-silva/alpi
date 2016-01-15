@@ -20,7 +20,7 @@ querem automatizar a tarefa de configuração do sistema.
 
 ### How to Run
 
-First, get `Arch Linux Pos Installation Beta`:
+First, get `Arch Linux Post Installation`:
 
 ```
 # pacman -Syu
