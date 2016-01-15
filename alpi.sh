@@ -17,6 +17,32 @@ else
 echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
+#Instalacao Yaourt
+yaourtinstall(){
+#Links
+packagequery='https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz'
+yaourt='https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz'
+
+#Verifica se yaourt esta instalado
+verify=$(which yaourt)
+if [ "$verify" == "/usr/bin/yaourt" ] || [ "$verify" == "/usr/sbin/yaourt" ]; then
+echo '-> [OK] Yaourt esta instalado...'
+else
+echo '-> Yaourt nao esta instalado. :('
+echo '-> Instalando Yaourt...'
+wget $packagequery $yaourt
+tar -xvf package-query.tar.gz
+tar -xvf yaourt.tar.gz 
+cd package-query
+makepkg -sic --noconfirm
+cd ..
+cd yaourt
+makepkg -sic --noconfirm
+cd ..
+rm -fR packa* yaour*
+fi
+}
+
 #Verifica se esta executando como ROOT
 root(){
 if [ "`whoami`" != "root" ];
@@ -57,6 +83,7 @@ fi
 #Verifica se nao e root para usar yaourt
 if [ "`whoami`" != "root" ];
 then
+yaourtinstall
 yaourt -Syua --noconfirm
 yaourt -S --needed dialog --noconfirm
 echo "-> Voce nao esta executando como root."
