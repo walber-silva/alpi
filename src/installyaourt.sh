@@ -36,7 +36,7 @@ cd ..
 cd yaourt
 makepkg -sic --noconfirm
 cd ..
-rm -fR yaourt packa* yaour*
+rm -fR packa* yaour*
 fi
 
 yaourt -Syua --noconfirm

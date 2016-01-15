@@ -19,7 +19,6 @@ fi
 
 #Instalacao Yaourt
 yaourtinstall(){
-#Links
 packagequery='https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz'
 yaourt='https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz'
 
@@ -76,13 +75,12 @@ echo "-> Verificando dependencias..."
 #Verifica se e root para usar pacman
 if [ "$(id -u)" == "0" ]; then
 pacman -Syu --noconfirm
-pacman -S --needed dialog --noconfirm
+pacman -S --needed dialog wget --noconfirm
 echo "-> Voce esta executando como root."
 fi
 
 #Verifica se nao e root para usar yaourt
-if [ "`whoami`" != "root" ];
-then
+if [ "`whoami`" != "root" ]; then
 yaourtinstall
 yaourt -Syua --noconfirm
 yaourt -S --needed dialog --noconfirm
