@@ -7,6 +7,7 @@
 ##################################################
 #
 #Variaveis
+clear
 packagequery='https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz'
 yaourt='https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz'
 
