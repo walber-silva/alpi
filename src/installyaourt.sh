@@ -49,11 +49,6 @@ yaourt -S --needed qbittorrent --noconfirm
 yaourt -S --needed gimp --noconfirm
 yaourt -S --needed gpaint --noconfirm
 yaourt -S --needed remmina --noconfirm
-yaourt -S --needed breeze-obsidian-cursor-theme --noconfirm
-yaourt -S --needed breeze-snow-cursor-theme --noconfirm 
-yaourt -S --needed numix-themes-archblue-git --noconfirm
-yaourt -S --needed numix-circle-icon-theme-git --noconfirm
-yaourt -S --needed gtk-theme-arc-git --noconfirm
 yaourt -S --needed ttf-ms-fonts --noconfirm
 echo
-echo "Instalacao concluida.."
+echo "Processo concluido.."

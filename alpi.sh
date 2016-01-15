@@ -468,7 +468,11 @@ outros=$(
 	    2 'AnyDesk' \
 	    3 'Java JRE' \
 	    4 'JDK' \
-	    6 'Voltar' \
+	    5 'Flareget' \
+	    6 'Skype' \
+	    7 'qbittorrent' \
+	    8 'Remmina' \
+	    9 'Voltar' \
             0 'Sair'                )
 
 	[ $? -ne 0 ] && break
@@ -497,7 +501,31 @@ outros=$(
 	echo; echo "-> Precione enter para continuar"; read
 	outros
 
+	elif [ "$outros" == "5" ]; then
+	clear
+	yaourt -S flareget --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
 	elif [ "$outros" == "6" ]; then
+	clear
+	yaourt -S skype --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "7" ]; then
+	clear
+	yaourt -S qbittorrent --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "8" ]; then
+	clear
+	yaourt -S remmina --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "9" ]; then
 	clear
 	programas
 else 
