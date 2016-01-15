@@ -166,7 +166,7 @@ navegadores=$(
 	    3 'Chromium' \
 	    4 'Iceweasel' \
 	    5 'Opera' \
-	    6 'Voltar' \echo; echo "-> Precione enter para continuar"; read
+	    6 'Voltar' \
             0 'Sair'                )
 
 	navegadores=$navegadores
