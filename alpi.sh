@@ -489,16 +489,17 @@ outros=$(
              --title 'Outros'  \
              --menu 'Selecione o programa para instalar:' \
             0 0 0                   \
-            1 'Teamviewer' \
-	    2 'AnyDesk' \
-	    3 'Java JRE' \
-	    4 'JDK' \
-	    5 'Flareget' \
-	    6 'Skype' \
-	    7 'qbittorrent' \
-	    8 'Remmina' \
-	    9 'Voltar' \
-            0 'Sair'                )
+            1  'Teamviewer' \
+	    2  'AnyDesk' \
+	    3  'Java JRE' \
+	    4  'JDK' \
+	    5  'Flareget' \
+	    6  'Skype' \
+	    7  'qbittorrent' \
+	    8  'Remmina' \
+	    9  'PlayOnLinux' \
+	    10 'Voltar' \
+            0  'Sair'                )
 
 	[ $? -ne 0 ] && break
 
@@ -551,6 +552,12 @@ outros=$(
 	outros
 
 	elif [ "$outros" == "9" ]; then
+	clear
+	yaourt -S --needed playonlinux --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "10" ]; then
 	clear
 	programas
 else 
