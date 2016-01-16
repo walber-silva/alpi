@@ -102,7 +102,8 @@ programas=$(
 	    4 'Aparencia e Personalizacao' \
 	    5 'Imagem e Video' \
 	    6 'Escritorio' \
-            7 'Outros' \
+	    7 'Virtualizacao e Containers' \
+            8 'Outros' \
 	    9 'Voltar' \
             0 'Sair'                )
 
@@ -129,6 +130,9 @@ programas=$(
 	office
 
 	elif [ "$programas" == "7" ]; then
+	vm
+
+	elif [ "$programas" == "8" ]; then
 	outros
 
 	elif [ "$programas" == "9" ]; then
@@ -151,6 +155,7 @@ multimidia=$(
             1 'VLC' \
 	    2 'SMPlayer' \
 	    3 'Rhythmbox' \
+	    4 'Audacity' \
 	    6 'Voltar' \
             0 'Sair'                )
 
@@ -173,6 +178,12 @@ multimidia=$(
 	elif [ "$multimidia" == "3" ]; then
 	clear
 	yaourt -S --needed rhythmbox-git --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	multimidia
+
+	elif [ "$multimidia" == "4" ]; then
+	clear
+	yaourt -S --needed audacity --noconfirm
 	echo; echo "-> Precione enter para continuar"; read
 	multimidia
 
@@ -506,7 +517,8 @@ imagemvideo=$(
 	    2 'Gimp' \
 	    3 'Blender' \
 	    4 'Kdenlive' \
-	    8 'Voltar' )
+	    8 'Voltar' \
+	    0 'Sair'	 )
 
 	[ $? -ne 0 ] && break
 
@@ -554,7 +566,8 @@ office=$(
             0 0 0                   \
             1 'LibreOffice' \
 	    2 'WPS Office' \
-	    8 'Voltar' )
+	    8 'Voltar' \
+	    0 'Sair' )
 
 	[ $? -ne 0 ] && break
 
@@ -571,6 +584,50 @@ office=$(
 	office
 
 	elif [ "$office" == "8" ]; then
+	clear
+	programas
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
+#VIRTUALIZACAO
+vm(){
+
+vm=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Virtualizacao e Containers'  \
+             --menu 'Selecione o programa para instalar:' \
+            0 0 0                   \
+            1 'VirtualBox' \
+	    2 'VMWare' \
+	    3 'Docker' \
+	    8 'Voltar' \
+	    0 'Sair' 	)
+
+	[ $? -ne 0 ] && break
+
+	if [ "$vm" == "1" ]; then
+	clear
+	yaourt -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox-sdk virtualbox-host-dkms virtualbox-host-modules --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	vm
+
+	elif [ "$vm" == "2" ]; then
+	clear
+	yaourt -S --needed X --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	vm
+
+	elif [ "$vm" == "3" ]; then
+	clear
+	yaourt -S --needed docker --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	vm
+
+	elif [ "$vm" == "8" ]; then
 	clear
 	programas
 else 
@@ -597,7 +654,9 @@ outros=$(
 	    7  'qbittorrent' \
 	    8  'Remmina' \
 	    9  'PlayOnLinux' \
-	    10 'Voltar' \
+	    10 'Terminator' \
+	    11 'Gparted' \
+	    12 'Voltar' \
             0  'Sair'                )
 
 	[ $? -ne 0 ] && break
@@ -657,6 +716,18 @@ outros=$(
 	outros
 
 	elif [ "$outros" == "10" ]; then
+	clear
+	yaourt -S --needed terminator --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "11" ]; then
+	clear
+	yaourt -S --needed gparted --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "12" ]; then
 	clear
 	programas
 else 
@@ -781,8 +852,12 @@ opcao=$(
 	menu
 
 	elif [ "$opcao" == "11" ]; then
+	dialog --yesno 'Tem certeza que deseja reinciar?' 0 0
+	if [ $? = 0 ]; then
 	reboot
-
+	else
+ 	menu
+	fi
 	menu
 
 	elif [ "$opcao" == "0" ]; then
