@@ -74,7 +74,7 @@ echo "-> Verificando dependencias..."
 
 #Verifica se e root para usar pacman
 if [ "$(id -u)" == "0" ]; then
-pacman -Syu --noconfirm
+pacman -Sy --noconfirm
 pacman -S --needed dialog wget --noconfirm
 echo "-> Voce esta executando como root."
 fi
@@ -82,7 +82,7 @@ fi
 #Verifica se nao e root para usar yaourt
 if [ "`whoami`" != "root" ]; then
 yaourtinstall
-yaourt -Syua --noconfirm
+yaourt -Sy --noconfirm
 yaourt -S --needed dialog --noconfirm
 echo "-> Voce nao esta executando como root."
 fi
@@ -96,11 +96,13 @@ programas=$(
              --title 'Instalar Programas'  \
              --menu 'Selecione a categoria:' \
             0 0 0                   \
-            1 'Navegadores' \
+            1 'Internet' \
 	    2 'Multimidia' \
 	    3 'Desenvolvimento' \
 	    4 'Aparencia e Personalizacao' \
-            5 'Outros' \
+	    5 'Imagem e Video' \
+	    6 'Escritorio' \
+            7 'Outros' \
 	    9 'Voltar' \
             0 'Sair'                )
 
@@ -109,7 +111,7 @@ programas=$(
 	[ $? -ne 0 ] && break
 
 	if [ "$programas" == "1" ]; then
-	navegadores
+	internet
 
 	elif [ "$programas" == "2" ]; then
 	multimidia
@@ -121,6 +123,12 @@ programas=$(
 	aparencia
 
 	elif [ "$programas" == "5" ]; then
+	imagemvideo
+
+	elif [ "$programas" == "6" ]; then
+	office
+
+	elif [ "$programas" == "7" ]; then
 	outros
 
 	elif [ "$programas" == "9" ]; then
@@ -177,13 +185,13 @@ fi
 }
 menu
 
-#NAVEGADORES
-navegadores(){
+#INTERNET
+internet(){
 
-navegadores=$(
+internet=$(
       dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
 	     --stdout               \
-             --title 'Navegadores'  \
+             --title 'Internet'  \
              --menu 'Selecione o programa para instalar:' \
             0 0 0                   \
             1 'Mozilla Firefox' \
@@ -191,44 +199,49 @@ navegadores=$(
 	    3 'Chromium' \
 	    4 'Iceweasel' \
 	    5 'Opera' \
-	    6 'Voltar' \
+	    6 'Mozilla Thunderbird' \
+	    7 'Voltar' \
             0 'Sair'                )
-
-	navegadores=$navegadores
 
 	[ $? -ne 0 ] && break
 
-	if [ "$navegadores" == "1" ]; then
+	if [ "$internet" == "1" ]; then
 	clear
 	yaourt -S --needed firefox firefox gst-libav gst-plugins-good upower --noconfirm
 	echo; echo "-> Precione enter para continuar"; read
-	navegadores
+	internet
 
-	elif [ "$navegadores" == "2" ]; then
+	elif [ "$internet" == "2" ]; then
 	clear
 	yaourt -S google-chrome --noconfirm
 	echo; echo "-> Precione enter para continuar"; read
-	navegadores
+	internet
 
-	elif [ "$navegadores" == "3" ]; then
+	elif [ "$internet" == "3" ]; then
 	clear
 	yaourt -S --needed chromium --noconfirm
 	echo; echo "-> Precione enter para continuar"; read
-	navegadores
+	internet
 
-	elif [ "$navegadores" == "4" ]; then
+	elif [ "$internet" == "4" ]; then
 	clear
 	yaourt -S --needed iceweasel --noconfirm
 	echo; echo "-> Precione enter para continuar"; read
-	navegadores
+	internet
 
-	elif [ "$navegadores" == "5" ]; then
+	elif [ "$internet" == "5" ]; then
 	clear
 	yaourt -S --needed opera --noconfirm
 	echo; echo "-> Precione enter para continuar"; read
-	navegadores
+	internet
 
-	elif [ "$navegadores" == "6" ]; then
+	elif [ "$internet" == "6" ]; then
+	clear
+	yaourt -S --needed thunderbird --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	internet
+
+	elif [ "$internet" == "7" ]; then
 	clear
 	programas
 else 
@@ -474,6 +487,92 @@ cursor=$(
 	elif [ "$cursor" == "4" ]; then
 	clear
 	tic
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
+#IMAGEM E VIDEO
+imagemvideo(){
+
+imagemvideo=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Imagem e Video'  \
+             --menu 'Selecione o programa para instalar:' \
+            0 0 0                   \
+            1 'Inkscape' \
+	    2 'Gimp' \
+	    3 'Blender' \
+	    4 'Kdenlive' \
+	    8 'Voltar' )
+
+	[ $? -ne 0 ] && break
+
+	if [ "$imagemvideo" == "1" ]; then
+	clear
+	yaourt -S --needed inkscape --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	imagemvideo
+
+	elif [ "$imagemvideo" == "2" ]; then
+	clear
+	yaourt -S --needed gimp --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	imagemvideo
+
+	elif [ "$imagemvideo" == "3" ]; then
+	clear
+	yaourt -S --needed blender --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	imagemvideo
+
+	elif [ "$imagemvideo" == "4" ]; then
+	clear
+	yaourt -S --needed kdenlive --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	imagemvideo
+
+	elif [ "$imagemvideo" == "8" ]; then
+	clear
+	programas
+else 
+echo 'Saindo do programa...'
+fi
+}
+menu
+
+#ESCRITORIO
+office(){
+
+office=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Escritorio'  \
+             --menu 'Selecione o programa para instalar:' \
+            0 0 0                   \
+            1 'LibreOffice' \
+	    2 'WPS Office' \
+	    8 'Voltar' )
+
+	[ $? -ne 0 ] && break
+
+	if [ "$office" == "1" ]; then
+	clear
+	pacman -S --needed libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	office
+
+	elif [ "$office" == "2" ]; then
+	clear
+	yaourt -S --needed wps-office wps-office-extension-portuguese-brazilian-dictionary --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	office
+
+	elif [ "$office" == "8" ]; then
+	clear
+	programas
 else 
 echo 'Saindo do programa...'
 fi
