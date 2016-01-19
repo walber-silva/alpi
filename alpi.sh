@@ -84,10 +84,6 @@ fi
 
 #Verifica se nao e root para usar yaourt
 if [ "`whoami`" != "root" ]; then
-#Verifica se esta instalado o wget
-verify=$(which wget)
-if [ "$verify" == "/usr/bin/wget" ] || [ "$verify" == "/usr/sbin/wget" ]; then
-echo "-> [Ok] Wget esta instalado..."
 yaourtinstall
 yaourt -Sy --noconfirm
 yaourt -S --needed dialog --noconfirm
@@ -97,7 +93,6 @@ sudo pacman -S --needed wget dialog --noconfirm
 yaourtinstall
 yaourt -Sy --noconfirm
 yaourt -S --needed dialog --noconfirm
-fi
 fi
 
 #PROGRAMAS
