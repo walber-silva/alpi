@@ -40,11 +40,7 @@ rm -fR packa* yaour*
 fi
 
 yaourt -Syua --noconfirm
-yaourt -S --needed teamviewer --noconfirm
-yaourt -S --needed flareget --noconfirm
-yaourt -S --needed skype --noconfirm 
 yaourt -S --needed google-chrome --noconfirm
-yaourt -S --needed mysql-workbench --noconfirm
 yaourt -S --needed qbittorrent --noconfirm
 yaourt -S --needed gimp --noconfirm
 yaourt -S --needed gpaint --noconfirm
