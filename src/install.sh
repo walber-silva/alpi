@@ -194,6 +194,7 @@ pacman -S --needed libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
 #Suport Not Intel & Touchpad
 dialog --yesno 'Deseja Instalar Driver de video Intel e driver para Touchpad?' 0 0
 if [ $? = 0 ]; then
+clear
 pacman -S --needed xf86-input-synaptics --noconfirm
 pacman -S --needed xf86-video-intel --noconfirm
 fi
@@ -214,7 +215,7 @@ pacman -U *.pkg.tar.xz --noconfirm
 #VirtualBox
 dialog --yesno 'Deseja Instalar o VirtualBox?' 0 0
 if [ $? = 0 ]; then
-
+clear
 pacman -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox-sdk virtualbox-host-dkms virtualbox-host-modules --noconfirm
 
 #Verificando se existe o arquivo de configuracao do virtualbox
