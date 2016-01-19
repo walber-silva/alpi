@@ -67,7 +67,7 @@ dialog --yesno 'Deseja alterar a Linguagem do sistema?' 0 0
 if [ $? = 0 ]; then
 
 lang=$(locale | grep LANG | sed 's/LANG=//')
-language=$( dialog --stdout --menu 'Atualizar Linguagem:' 0 0 0 $lang 'Manter a Linguagem atual' pt_BR 'Atualizar para Portugues BR' en_US 'Atualizar para Ingles' )
+language=$( dialog --stdout --menu 'Atualizar Linguagem:' 0 0 0 $lang 'Manter a Linguagem atual' pt_BR 'Atualizar para Portugues BR' en_US 'Atualizar para Ingles' + 'Definir Linguagem manualmente' )
 
 if [ "$language" == "$lang" ]; then
 dialog	\
@@ -121,6 +121,15 @@ LOCALECONF="/etc/locale.conf"
  --title 'Informacao!'	\
  --msgbox 'Seu idioma foi atualizado para en_US...'	\
  6 40
+
+elif [ "$language" == "+" ]; then
+nano /etc/locale.conf
+clear
+
+dialog	\
+--title 'Informacao!'	\
+--msgbox 'Voce definiu manualmente a linguagem...'	\
+6 40
 
 fi
 fi
@@ -193,7 +202,7 @@ fi
 clear
 pacman -S --needed dosfstools ntfs-3g nilfs-utils mtools f2fs-tools exfat-utils nilfs-utils gpart ntfs-3g gvfs-mtp --noconfirm
 
-#Suporte smartphone android - gvfs-mtp  
+#Suporte smartphone android - gvfs-mtp
 
 #Others
 pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools vlc smplayer --noconfirm
@@ -231,4 +240,3 @@ echo "vboxpci" >> /etc/modules-load.d/virtualbox.conf
 gpasswd -a $USER vboxusers
 fi
 fi
-
