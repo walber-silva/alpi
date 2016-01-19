@@ -93,7 +93,10 @@ yaourt -Sy --noconfirm
 yaourt -S --needed dialog --noconfirm
 echo "-> Voce nao esta executando como root."
 else
-sudo pacman -S wget
+sudo pacman -S --needed wget dialog --noconfirm
+yaourtinstall
+yaourt -Sy --noconfirm
+yaourt -S --needed dialog --noconfirm
 fi
 fi
 
