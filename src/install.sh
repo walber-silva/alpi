@@ -19,7 +19,7 @@ fi
 
 #CONFIGURACAO PADRAO - IDIOMA PT-BR - TECLADO ABNT2 - GNOME - Driver de Video Intel
 #TECLADO
-dialog --yesno 'Deseja alterar a linguagem do teclado?' 0 0
+dialog --yesno 'Deseja alterar a Linguagem do teclado?' 0 0
 if [ $? = 0 ]; then
 
 keyboard=$( dialog --stdout --menu 'Alterar linguagem do teclado:' 0 0 0 X 'Manter a Linguagem atual' pt_BR 'Definir Portugues BR' + 'Definir manualmente' )
@@ -135,7 +135,6 @@ dialog	\
 fi
 fi
 
-
 #Atualiza Configuracoes do pacman
 clear
 echo "-> Atualizando configuracoes do pacman..."
@@ -151,7 +150,6 @@ rm /var/lib/pacman/db.lck
 else
 echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
-
 
 #echo "Adicionando usuario ao Sudoers"
 #echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
@@ -190,7 +188,11 @@ pacman -S --needed vim nano mlocate guake git wget dialog terminator --noconfirm
 pacman -S --needed firefox gst-libav gst-plugins-good upower screenfetch --noconfirm
 
 #Libre Office
+dialog --yesno 'Deseja instalar LibreOffice?' 0 0
+if [ $? = 0 ]; then
+clear
 pacman -S --needed libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
+fi
 
 #Suport Not Intel & Touchpad
 dialog --yesno 'Deseja Instalar Driver de video Intel e driver para Touchpad?' 0 0
