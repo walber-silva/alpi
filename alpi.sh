@@ -76,6 +76,9 @@ echo "-> Verificando dependencias..."
 if [ "$(id -u)" == "0" ]; then
 pacman -Sy --noconfirm
 pacman -S --needed dialog wget --noconfirm
+cd src
+echo "-> Instalando Yaourt..."
+pacman -U *.pkg.tar.xz --noconfirm
 echo "-> Voce esta executando como root."
 fi
 
