@@ -1,4 +1,4 @@
-### Copyright (c) 2016 ALT Project
+### Copyright (c) 2016 ALT Project 
 ### Arch Linux Post Installation (alpi) - Beta
 
 ![screenshot](https://github.com/tiagorlampert/alpi/blob/master/screenshot.png)
@@ -8,7 +8,7 @@
 ```
 PT-BR
 Arch Linux Pós Instalação (alpi), é uma ferramenta que permite facilitar a configuração do sistema
-Arch Linux após a sua instalação. Focada para iniciantes na distribuição e para usuários experientes que
+Arch Linux após a sua instalação. Focada para iniciantes na distribuição e para usuários experientes que 
 querem automatizar a tarefa de configuração do sistema.
 ```
 
@@ -23,7 +23,7 @@ querem automatizar a tarefa de configuração do sistema.
 First, get `Arch Linux Post Installation`:
 
 ```
-# pacman -Sy
+# pacman -Syu
 # pacman -S git
 $ git clone https://github.com/tiagorlampert/alpi.git
 $ cd alpi

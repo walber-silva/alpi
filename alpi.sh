@@ -745,7 +745,7 @@ opcao=$(
              --title 'Menu'  \
              --menu 'Selecione a opcao:' \
             0 0 0                   \
-            1  'Instalacao minima padrao [PACMAN] (#ROOT)' \
+            1  'Instalacao basica padrao [PACMAN] (#ROOT)' \
 	    2  'Instalacao completa padrao [YAOURT] ($NO-ROOT)' \
 	    3  'Central de Programas' \
 	    4  'Verificar Atualizacao do Sistema' \
@@ -788,7 +788,7 @@ opcao=$(
 	noroot
 	clear
 	yaourt -Syua --noconfirm
-	echo; echo "-> Precione enter para proseguir..."	
+	echo; echo "-> Precione enter para prosseguir..."	
 	read
 	menu
 
@@ -796,7 +796,7 @@ opcao=$(
 	noroot
 	clear
 	yaourt -Scc
-	echo; echo "-> Precione enter para proseguir..."	
+	echo; echo "-> Precione enter para prosseguir..."	
 	read
 	menu
 
