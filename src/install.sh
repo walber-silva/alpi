@@ -31,6 +31,7 @@ dialog	\
 6 40
 
 elif [ "$keyboard" == "pt_BR" ]; then
+clear
 LOCALEGEN="/etc/locale.gen"
 if [ -e "$LOCALEGEN" ] ; then
  echo "-> Atualizando layout do teclado..."
@@ -76,7 +77,7 @@ dialog	\
 6 40
 
 elif [ "$language" == "pt_BR" ]; then
-
+clear
 LOCALECONF="/etc/locale.conf"
  if [ -e "$LOCALECONF" ] ; then
 	clear

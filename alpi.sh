@@ -753,7 +753,7 @@ opcao=$(
              --title 'Menu'  \
              --menu 'Selecione a opcao:' \
             0 0 0                   \
-            1  'Instalacao basica padrao [PACMAN] (#ROOT)' \
+            1  'Instalação basica padrão [PACMAN] (#ROOT)' \
 	    2  'Instalacao completa padrao [YAOURT] ($NO-ROOT)' \
 	    3  'Central de Programas' \
 	    4  'Verificar Atualizacao do Sistema' \
