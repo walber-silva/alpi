@@ -610,8 +610,7 @@ vm=$(
              --menu 'Selecione o programa para instalar:' \
             0 0 0                   \
             1 'VirtualBox' \
-	    2 'VMWare' \
-	    3 'Docker' \
+	    2 'Docker' \
 	    8 'Voltar' \
 	    0 'Sair' 	)
 
@@ -624,12 +623,6 @@ vm=$(
 	vm
 
 	elif [ "$vm" == "2" ]; then
-	clear
-	yaourt -S --needed X --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	vm
-
-	elif [ "$vm" == "3" ]; then
 	clear
 	yaourt -S --needed docker --noconfirm
 	echo; echo "-> Precione enter para continuar"; read
