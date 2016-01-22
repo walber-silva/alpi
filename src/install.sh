@@ -184,8 +184,9 @@ systemctl enable NetworkManager.service
 systemctl start NetworkManager.service
 
 #Basic
-pacman -S --needed vim nano mlocate guake git wget dialog terminator --noconfirm
+pacman -S --needed vim nano mlocate guake git wget dialog terminator openssh --noconfirm
 pacman -S --needed firefox gst-libav gst-plugins-good upower screenfetch --noconfirm
+systemctl start sshd
 
 #Libre Office
 dialog --yesno 'Deseja instalar LibreOffice?' 0 0
