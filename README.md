@@ -23,7 +23,7 @@ querem automatizar a tarefa de configuração do sistema.
 First, get `Arch Linux Post Installation`:
 
 ```
-# pacman -Syu
+# pacman -Sy
 # pacman -S git
 $ git clone https://github.com/tiagorlampert/alpi.git
 $ cd alpi
