@@ -45,3 +45,12 @@ Send a e-mail to trepmalogait@gmail.com
 ### License
 
 **Arch Linux Post Installation (alpi)** use the [GPL](LICENSE).
+
+### About
+**Developers**
+
+```
+Tiago Rodrigo Lampert de Oliveira
+Luiz F. Hanauer
+Ariel F. Morgan
+```
