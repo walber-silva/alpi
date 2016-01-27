@@ -50,6 +50,6 @@ Send a e-mail to trepmalogait@gmail.com
 
 ```
 Tiago Rodrigo Lampert de Oliveira
-Luiz F. Hanauer
+Luiz Fernando Hanauer
 Ariel F. Morgan
 ```
