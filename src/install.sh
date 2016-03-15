@@ -220,7 +220,7 @@ pacman -U *.pkg.tar.xz --noconfirm
 dialog --yesno 'Deseja Instalar o VirtualBox?' 0 0
 if [ $? = 0 ]; then
 clear
-pacman -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox-sdk virtualbox-host-dkms virtualbox-host-modules --noconfirm
+pacman -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox-sdk virtualbox-host-dkms --noconfirm
 
 #Verificando se existe o arquivo de configuracao do virtualbox
 FILE="/etc/modules-load.d/virtualbox.conf"
