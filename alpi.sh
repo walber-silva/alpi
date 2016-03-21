@@ -6,6 +6,8 @@
 #
 ##################################################
 #
+NAME="Arch Linux Post Installation (alpi)"
+VERSION="0.8 Beta"
 #Verificando se o pacman esta sendo usado por outro processo
 clear
 FILE="/var/lib/pacman/db.lck"
@@ -99,7 +101,7 @@ fi
 programas(){
 
 programas=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Instalar Programas'  \
              --menu 'Selecione a categoria:' \
@@ -155,7 +157,7 @@ menu
 multimidia(){
 
 multimidia=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Multimidia'  \
              --menu 'Selecione o programa para instalar:' \
@@ -208,7 +210,7 @@ menu
 internet(){
 
 internet=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Internet'  \
              --menu 'Selecione o programa para instalar:' \
@@ -273,7 +275,7 @@ menu
 desenvolvimento(){
 
 desenvolvimento=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Desenvolvimento'  \
              --menu 'Selecione o programa para instalar:' \
@@ -346,7 +348,7 @@ menu
 aparencia(){
 
 aparencia=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Aparencia e Personalizacao'  \
              --menu 'Selecione a categoria para prosseguir:' \
@@ -387,7 +389,7 @@ menu
 temas(){
 
 temas=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Temas'  \
              --menu 'Selecione o tema para instalar:' \
@@ -430,7 +432,7 @@ menu
 icones(){
 
 icones=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Icones'  \
              --menu 'Selecione o icone para instalar:' \
@@ -473,7 +475,7 @@ menu
 cursor(){
 
 cursor=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Cursores'  \
              --menu 'Selecione o cursor para instalar:' \
@@ -516,7 +518,7 @@ menu
 imagemvideo(){
 
 imagemvideo=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Imagem e Video'  \
              --menu 'Selecione o programa para instalar:' \
@@ -567,7 +569,7 @@ menu
 office(){
 
 office=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Escritorio'  \
              --menu 'Selecione o programa para instalar:' \
@@ -604,7 +606,7 @@ menu
 vm(){
 
 vm=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Virtualizacao e Containers'  \
              --menu 'Selecione o programa para instalar:' \
@@ -641,7 +643,7 @@ menu
 outros(){
 
 outros=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Outros'  \
              --menu 'Selecione o programa para instalar:' \
@@ -741,7 +743,7 @@ menu
 menu(){
 
 opcao=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Menu'  \
              --menu 'Selecione a opcao:' \

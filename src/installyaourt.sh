@@ -43,7 +43,6 @@ yaourt -Syua --noconfirm
 yaourt -S --needed google-chrome --noconfirm
 yaourt -S --needed qbittorrent --noconfirm
 yaourt -S --needed gimp --noconfirm
-yaourt -S --needed gpaint --noconfirm
 yaourt -S --needed remmina --noconfirm
 yaourt -S --needed ttf-ms-fonts --noconfirm
 echo

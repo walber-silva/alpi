@@ -6,6 +6,8 @@
 #
 ##################################################
 #
+NAME="Arch Linux Post Installation (alpi)"
+VERSION="0.8 Beta"
 if [ "`whoami`" != "root" ];
 then
 clear
@@ -168,11 +170,10 @@ echo "Criando usuario..."
 useradd -m -G wheel -s /bin/bash $user
 gpasswd -a $user storage
 gpasswd -a $user disk
-echo "Definindo senha..."
-passwd $user
-
 echo "Adicionando usuario ao arquivo sudoers..."
 echo "$user ALL=(ALL) ALL" >> /etc/sudoers
+echo "Definindo senha..."
+passwd $user
 }
 
 dialog --yesno 'Deseja criar um novo usuario?' 0 0
@@ -198,7 +199,7 @@ pacman -Syu --noconfirm
 deinstall(){
 
 de=$(
-      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+      dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Ambiente de Trabalho'  \
              --menu 'Selecione um Ambiente de Trabalho para instalar:' \
