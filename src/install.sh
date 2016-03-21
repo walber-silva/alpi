@@ -151,8 +151,37 @@ else
 echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
-#echo "Adicionando usuario ao Sudoers"
-#echo "$USER ALL=(ALL) ALL" >> /etc/sudoers
+#Criando Usuario
+user=$(dialog --stdout \
+	    --backtitle 'Criar Usuario' \
+	    --inputbox 'Informe o nome do novo usuario: ' 10 50)
+echo "Criando usuario..."	
+useradd -m -G wheel -s /bin/bash $user
+
+#Definindo Senha
+pass(){
+passwd=$(dialog --stdout \
+	    --backtitle 'Definir Senha' \
+	    --inputbox 'Informe a senha para o novo usuario: ' 10 50)
+passwd2=$(dialog --stdout \
+	    --backtitle 'Definir Senha' \
+	    --inputbox 'Informe novamente a senha: ' 10 50)
+
+if [ "$passwd" == "$passwd2" ]; then
+passwd $user
+
+else 
+dialog	\
+--title 'Informacao!'	\
+--msgbox 'As senhas não correspondem!'	\
+6 40
+pass
+fi
+}
+pass
+
+echo "Adicionando usuario ao arquivo sudoers..."
+echo "$user ALL=(ALL) ALL" >> /etc/sudoers
 
 #Permissao Usuario
 #chown -R $USER /home/$USER/
