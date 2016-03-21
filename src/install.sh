@@ -293,7 +293,8 @@ pacman -S --needed dosfstools ntfs-3g nilfs-utils mtools f2fs-tools exfat-utils 
 #Suporte smartphone android - gvfs-mtp
 
 #Others
-pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools vlc smplayer screenfetch terminix --noconfirm
+pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools --noconfirm
+pacman -S --needed vlc smplayer screenfetch --noconfirm
 
 #Install Yaourt
 echo "-> Instalando Yaourt..."
