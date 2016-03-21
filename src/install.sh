@@ -151,6 +151,13 @@ else
 echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
+#Definindo Hostname
+hostname=$(dialog --stdout \
+	    --backtitle 'Definir Hostname' \
+	    --inputbox 'Informe um nome para a sua maquina: ' 10 50)
+clear
+echo $hostname > /etc/hostname
+
 createuser(){
 #Criando Usuario
 user=$(dialog --stdout \
@@ -222,7 +229,7 @@ clear
 echo "Instalando Xfce..."
 pacman -S xfce4 xfce4-goodies xarchiver mupdf --needed --noconfirm
 echo "exec start xfce4" >> ~/.xinitrc
-pacman -S lightdm --needed --noconfirm
+pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
 systemctl enable lightdm.service
 
 elif [ "$de" == "4" ]; then
@@ -230,7 +237,7 @@ clear
 echo "Instalando Cinnamon..."
 pacman -S cinnamon --needed --noconfirm
 echo "exec cinnamon-session" >> ~/.xinitrc
-pacman -S lightdm --needed --noconfirm
+pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
 systemctl enable lightdm.service
 
 elif [ "$de" == "5" ]; then
@@ -238,7 +245,7 @@ clear
 echo "Instalando Mate..."
 pacman -S mate mate-extra --needed --noconfirm
 echo "exec mate-session" >> ~/.xinitrc
-pacman -S lightdm --needed --noconfirm
+pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
 systemctl enable lightdm.service
 
 fi
