@@ -151,6 +151,7 @@ else
 echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
+createuser(){
 #Criando Usuario
 user=$(dialog --stdout \
 	    --backtitle 'Criar Usuario' \
@@ -182,9 +183,12 @@ pass
 
 echo "Adicionando usuario ao arquivo sudoers..."
 echo "$user ALL=(ALL) ALL" >> /etc/sudoers
+}
 
-#Permissao Usuario
-#chown -R $USER /home/$USER/
+dialog --yesno 'Deseja criar um novo usuario?' 0 0
+if [ $? = 0 ]; then
+createuser
+fi
 
 #Instala pacotes base de video
 echo "-> Instalando drivers basicos de video..."
