@@ -660,7 +660,8 @@ outros=$(
 	    10 'Terminator' \
 	    11 'Gparted' \
 	    12 'Terminix' \
-	    13 'Voltar' \
+	    13 'GDM 3 Setup'	\
+	    14 'Voltar' \
             0  'Sair'                )
 
 	[ $? -ne 0 ] && break
@@ -738,6 +739,12 @@ outros=$(
 	outros
 
 	elif [ "$outros" == "13" ]; then
+	clear
+	yaourt -S --needed gdm3setup archlinux-artwork --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "14" ]; then
 	clear
 	programas
 else 
