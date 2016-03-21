@@ -659,7 +659,8 @@ outros=$(
 	    9  'PlayOnLinux' \
 	    10 'Terminator' \
 	    11 'Gparted' \
-	    12 'Voltar' \
+	    12 'Terminix' \
+	    13 'Voltar' \
             0  'Sair'                )
 
 	[ $? -ne 0 ] && break
@@ -731,6 +732,12 @@ outros=$(
 	outros
 
 	elif [ "$outros" == "12" ]; then
+	clear
+	yaourt -S --needed terminix-git --noconfirm
+	echo; echo "-> Precione enter para continuar"; read
+	outros
+
+	elif [ "$outros" == "13" ]; then
 	clear
 	programas
 else 
