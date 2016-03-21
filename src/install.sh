@@ -185,23 +185,81 @@ pacman -S --needed ttf-dejavu --noconfirm
 #Procura por atualizacoes do sistema
 pacman -Syu --noconfirm
 
-#Instala o Gnome
-dialog --yesno 'Deseja Instalar o Gnome?' 0 0
-if [ $? = 0 ]; then
+#Instalar DE
+deinstall(){
+
+de=$(
+      dialog --backtitle ' Arch Linux Post Installation (alpi) - Version 0.6 Beta' \
+	     --stdout               \
+             --title 'Ambiente de Trabalho'  \
+             --menu 'Selecione um Ambiente de Trabalho para instalar:' \
+            0 0 0                   \
+            1 'GNOME' \
+	    2 'KDE' \
+	    3 'Xfce' \
+	    4 'Cinnamon' \
+	    5 'Mate' \
+            0 'Sair'   )
+
+	[ $? -ne 0 ] && break
+
+if [ "$de" == "1" ]; then
+clear
+echo "Instalando GNOME..."
 pacman -S gnome --needed --noconfirm
+pacman -S gedit-plugins gnome-tweak-tool gnome-power-manager gucharmap gvfs-goa --needed --noconfirm
 systemctl enable gdm.service
+deinstall
+
+elif [ "$de" == "2" ]; then
+clear
+echo "Instalando KDE..."
+pacman -S plasma sddm --needed --noconfirm
+systemctl start sddm
+
+elif [ "$de" == "3" ]; then
+clear
+echo "Instalando Xfce..."
+pacman -S xfce4 xfce4-goodies xarchiver mupdf --needed --noconfirm
+echo "exec start xfce4" >> ~/.xinitrc
+pacman -S lightdm --needed --noconfirm
+systemctl enable lightdm.service
+
+elif [ "$de" == "4" ]; then
+clear
+echo "Instalando Cinnamon..."
+pacman -S cinnamon --needed --noconfirm
+echo "exec cinnamon-session" >> ~/.xinitrc
+pacman -S lightdm --needed --noconfirm
+systemctl enable lightdm.service
+
+elif [ "$de" == "5" ]; then
+clear
+echo "Instalando Mate..."
+pacman -S mate mate-extra --needed --noconfirm
+echo "exec mate-session" >> ~/.xinitrc
+pacman -S lightdm --needed --noconfirm
+systemctl enable lightdm.service
+
+fi
+}
+
+dialog --yesno 'Deseja instalar algum Ambiente de Trabalho?' 0 0
+if [ $? = 0 ]; then
+deinstall
 fi
 
 #Network
 clear
+echo "Instalando e configurando suporte a Wireless"
 pacman -S --needed networkmanager network-manager-applet --noconfirm
 systemctl enable NetworkManager.service
 systemctl start NetworkManager.service
 
 #Basic
-pacman -S --needed vim nano mlocate guake git wget dialog terminator openssh --noconfirm
-pacman -S --needed firefox gst-libav gst-plugins-good upower screenfetch --noconfirm
-systemctl start sshd
+echo "Instalando programas basicos..."
+pacman -S --needed vim nano mlocate guake git wget dialog openssh --noconfirm
+pacman -S --needed firefox gst-libav gst-plugins-good upower --noconfirm
 
 #Libre Office
 dialog --yesno 'Deseja instalar LibreOffice?' 0 0
@@ -225,7 +283,7 @@ pacman -S --needed dosfstools ntfs-3g nilfs-utils mtools f2fs-tools exfat-utils 
 #Suporte smartphone android - gvfs-mtp
 
 #Others
-pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools vlc smplayer --noconfirm
+pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools vlc smplayer screenfetch terminix --noconfirm
 
 #Install Yaourt
 echo "-> Instalando Yaourt..."
