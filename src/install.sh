@@ -166,6 +166,8 @@ user=$(dialog --stdout \
 clear
 echo "Criando usuario..."	
 useradd -m -G wheel -s /bin/bash $user
+gpasswd -a $user disk
+gpasswd -a $user storage
 echo "Definindo senha..."
 passwd $user
 
