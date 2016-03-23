@@ -167,9 +167,7 @@ user=$(dialog --stdout \
 	    --inputbox 'Informe o nome do novo usuario: ' 10 50)
 clear
 echo "Criando usuario..."	
-useradd -m -G wheel -s /bin/bash $user
-gpasswd -a $user storage
-gpasswd -a $user disk
+useradd -m -G wheel,storage,power,network,video,audio,disk,lp -s /bin/bash $user
 echo "Adicionando usuario ao arquivo sudoers..."
 echo "$user ALL=(ALL) ALL" >> /etc/sudoers
 echo "Definindo senha..."
