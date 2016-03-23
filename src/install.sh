@@ -154,11 +154,19 @@ echo "-> [OK] Pacman nao esta sendo usado por nenhum processo.."
 fi
 
 #Definindo Hostname
+set_hostname(){
 hostname=$(dialog --stdout \
 	    --backtitle 'Definir Hostname' \
 	    --inputbox 'Informe um nome para a sua maquina: ' 10 50)
 clear
+if [ "$hostname" ==  "" ]; then
+set_hostname
+
+else
 echo $hostname > /etc/hostname
+fi
+}
+set_hostname
 
 createuser(){
 #Criando Usuario
@@ -166,12 +174,17 @@ user=$(dialog --stdout \
 	    --backtitle 'Criar Usuario' \
 	    --inputbox 'Informe o nome do novo usuario: ' 10 50)
 clear
+if [ "$user" ==  "" ]; then
+createuser
+else
+
 echo "Criando usuario..."	
 useradd -m -G wheel,storage,power,network,video,audio,disk,lp -s /bin/bash $user
 echo "Adicionando usuario ao arquivo sudoers..."
 echo "$user ALL=(ALL) ALL" >> /etc/sudoers
 echo "Definindo senha..."
 passwd $user
+fi
 }
 
 dialog --yesno 'Deseja criar um novo usuario?' 0 0
@@ -181,6 +194,8 @@ fi
 
 #Instala pacotes base de video
 clear
+base_video(){
+clear
 echo "-> Instalando drivers basicos de video..."
 pacman -Syu --noconfirm
 pacman -S --needed alsa-utils --noconfirm
@@ -189,9 +204,13 @@ pacman -S --needed xf86-video-vesa --noconfirm
 pacman -S --needed mesa --noconfirm
 pacman -S --needed xorg-twm xorg-xclock xterm --noconfirm
 pacman -S --needed ttf-dejavu --noconfirm
+}
 
-#Procura por atualizacoes do sistema
-pacman -Syu --noconfirm
+dialog --yesno 'Deseja instalar drivers basicos de video?' 0 0
+if [ $? = 0 ]; then
+base_video
+fi
+
 
 #Instalar DE
 deinstall(){
@@ -258,16 +277,32 @@ deinstall
 fi
 
 #Network
+wifi(){
 clear
 echo "Instalando e configurando suporte a Wireless"
 pacman -S --needed networkmanager network-manager-applet --noconfirm
 systemctl enable NetworkManager.service
 systemctl start NetworkManager.service
+}
+
+dialog --yesno 'Deseja instalar e configurar o suporte a Wireless?' 0 0
+if [ $? = 0 ]; then
+wifi
+fi
 
 #Basic
+prog_basic(){
 echo "Instalando programas basicos..."
 pacman -S --needed vim nano mlocate guake git wget dialog openssh --noconfirm
 pacman -S --needed firefox gst-libav gst-plugins-good upower --noconfirm
+pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools --noconfirm
+pacman -S --needed vlc smplayer screenfetch --noconfirm
+}
+
+dialog --yesno 'Deseja instalar alguns programas basicos? (... vim, nano, firefox, vlc, smplayer, git)' 0 0
+if [ $? = 0 ]; then
+prog_basic
+fi
 
 #Libre Office
 dialog --yesno 'Deseja instalar LibreOffice?' 0 0
@@ -286,13 +321,10 @@ fi
 
 #Suport Disk
 clear
+echo "Instalando pacotes e bibliotecas para suporte a outros sistemas de arquivos..."
 pacman -S --needed dosfstools ntfs-3g nilfs-utils mtools f2fs-tools exfat-utils nilfs-utils gpart ntfs-3g gvfs-mtp --noconfirm
 
 #Suporte smartphone android - gvfs-mtp
-
-#Others
-pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools --noconfirm
-pacman -S --needed vlc smplayer screenfetch --noconfirm
 
 #Install Yaourt
 echo "-> Instalando Yaourt..."
