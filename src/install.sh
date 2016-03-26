@@ -362,6 +362,7 @@ echo "vboxnetadp" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxnetflt" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxpci" >> /etc/modules-load.d/virtualbox.conf
 modprobe vboxdrv
+/sbin/rcvboxdrv setup
 gpasswd -a $USER vboxusers
 fi
 fi
