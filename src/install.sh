@@ -166,7 +166,11 @@ else
 echo $hostname > /etc/hostname
 fi
 }
+
+dialog --yesno 'Deseja alterar o nome da maquina?' 0 0
+if [ $? = 0 ]; then
 set_hostname
+fi
 
 createuser(){
 #Criando Usuario
@@ -335,6 +339,8 @@ dialog --yesno 'Deseja Instalar o VirtualBox?' 0 0
 if [ $? = 0 ]; then
 clear
 pacman -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox-sdk virtualbox-host-dkms --noconfirm
+pacman -S virtualbox-guest-dkms --needed --noconfirm
+pacman -S linux-headers --needed
 
 #Verificando se existe o arquivo de configuracao do virtualbox
 FILE="/etc/modules-load.d/virtualbox.conf"
@@ -355,7 +361,7 @@ echo "vboxdrv" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxnetadp" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxnetflt" >> /etc/modules-load.d/virtualbox.conf
 echo "vboxpci" >> /etc/modules-load.d/virtualbox.conf
-
+modprobe vboxdrv
 gpasswd -a $USER vboxusers
 fi
 fi
