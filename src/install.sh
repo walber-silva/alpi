@@ -245,8 +245,8 @@ deinstall
 elif [ "$de" == "2" ]; then
 clear
 echo "Instalando KDE..."
-pacman -S plasma sddm --needed --noconfirm
-systemctl start sddm
+pacman -S plasma plasma-meta plasma-desktop kde-applications breeze-gtk kde-gtk-config --needed --noconfirm
+systemctl enable sddm
 
 elif [ "$de" == "3" ]; then
 clear
@@ -305,6 +305,7 @@ pacman -S --needed vlc smplayer screenfetch --noconfirm
 
 dialog --yesno 'Deseja instalar alguns programas basicos? (... vim, nano, firefox, vlc, smplayer, git)' 0 0
 if [ $? = 0 ]; then
+clear
 prog_basic
 fi
 
