@@ -34,12 +34,12 @@ echo '-> Instalando Yaourt...'
 wget $packagequery $yaourt
 tar -xvf package-query.tar.gz
 tar -xvf yaourt.tar.gz
-cd package-query
+(cd package-query || exit
 makepkg -sic --noconfirm
-cd ..
-cd yaourt
+)
+(cd yaourt || exit
 makepkg -sic --noconfirm
-cd ..
+)
 rm -fR packa* yaour*
 fi
 }
@@ -783,17 +783,17 @@ opcao=$(
 	if [ "$opcao" == "1" ]; then
 	root
 	clear
-	cd src
+	(cd src || exit
 	sh install.sh
-	cd ..
+	)
 
 	menu
 
 	elif [ "$opcao" == "2" ]; then
 	noroot
-	cd src
+	(cd src || exit
 	sh installyaourt.sh
-	cd ..
+	)
 
 	menu
 

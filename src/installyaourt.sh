@@ -29,13 +29,13 @@ echo '-> Yaourt nao esta instalado. :('
 echo '-> Instalando Yaourt...'
 wget $packagequery $yaourt
 tar -xf package-query.tar.gz
-tar -xf yaourt.tar.gz 
-cd package-query
+tar -xf yaourt.tar.gz
+(cd package-query || exit
 makepkg -sic --noconfirm
-cd ..
-cd yaourt
+)
+(cd yaourt || exit
 makepkg -sic --noconfirm
-cd ..
+)
 rm -fR packa* yaour*
 fi
 
