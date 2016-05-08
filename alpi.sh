@@ -419,9 +419,9 @@ temas=$(
 	echo; echo "-> Precione enter para continuar"; read
 	temas
 
-	elif [ "$tic" == "4" ]; then
+elif [ "$temas" == "4" ]; then
 	clear
-	tic
+	programas
 else
 echo 'Saindo do programa...'
 fi
