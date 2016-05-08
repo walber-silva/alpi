@@ -182,7 +182,7 @@ if [ "$user" ==  "" ]; then
 createuser
 else
 
-echo "Criando usuario..."	
+echo "Criando usuario..."
 useradd -m -G wheel,storage,power,network,video,audio,disk,lp -s /bin/bash $user
 echo "Adicionando usuario ao arquivo sudoers..."
 echo "$user ALL=(ALL) ALL" >> /etc/sudoers
@@ -232,7 +232,7 @@ de=$(
 	    5 'Mate' \
             0 'Sair'   )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 if [ "$de" == "1" ]; then
 clear
