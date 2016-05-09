@@ -421,7 +421,7 @@ temas=$(
 
 elif [ "$temas" == "4" ]; then
 	clear
-	programas
+	aparencia
 else
 echo 'Saindo do programa...'
 fi
@@ -464,7 +464,7 @@ icones=$(
 
 	elif [ "$icones" == "4" ]; then
 	clear
-	tic
+	temas
 else
 echo 'Saindo do programa...'
 fi
@@ -507,7 +507,7 @@ cursor=$(
 
 	elif [ "$cursor" == "4" ]; then
 	clear
-	tic
+	temas
 else
 echo 'Saindo do programa...'
 fi
