@@ -21,7 +21,7 @@ querem automatizar a tarefa de configuração do sistema.
 
 ### How to Run
 
-First, get `Arch Linux Post Installation`:
+First, prepare the host and clone this `Arch Linux Post Installation` repository:
 
 ```
 # pacman -Sy
@@ -30,7 +30,7 @@ $ git clone https://github.com/tiagorlampert/alpi.git
 $ cd alpi
 ```
 
-After get it:
+Then run the script:
 
 ```
 # chmod +x alpi.sh
@@ -41,11 +41,11 @@ After get it:
 
 ### Contact
 
-Send a e-mail to trepmalogait@gmail.com
+Send an email to trepmalogait@gmail.com
 
 ### License
 
-**Arch Linux Post Installation (alpi)** use the [GPL](LICENSE).
+**Arch Linux Post Installation (alpi)** uses the [GPL](LICENSE).
 
 ### Developers
 

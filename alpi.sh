@@ -33,13 +33,13 @@ echo '-> Yaourt nao esta instalado. :('
 echo '-> Instalando Yaourt...'
 wget $packagequery $yaourt
 tar -xvf package-query.tar.gz
-tar -xvf yaourt.tar.gz 
-cd package-query
+tar -xvf yaourt.tar.gz
+(cd package-query || exit
 makepkg -sic --noconfirm
-cd ..
-cd yaourt
+)
+(cd yaourt || exit
 makepkg -sic --noconfirm
-cd ..
+)
 rm -fR packa* yaour*
 fi
 }
@@ -119,7 +119,7 @@ programas=$(
 
 	programas=$programas
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$programas" == "1" ]; then
 	internet
@@ -147,7 +147,7 @@ programas=$(
 
 	elif [ "$programas" == "9" ]; then
 	menu
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -171,7 +171,7 @@ multimidia=$(
 
 	multimidia=$multimidia
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$multimidia" == "1" ]; then
 	clear
@@ -200,7 +200,7 @@ multimidia=$(
 	elif [ "$multimidia" == "6" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -224,7 +224,7 @@ internet=$(
 	    7 'Voltar' \
             0 'Sair'                )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$internet" == "1" ]; then
 	clear
@@ -265,7 +265,7 @@ internet=$(
 	elif [ "$internet" == "7" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -290,7 +290,7 @@ desenvolvimento=$(
 	    8 'Voltar' \
             0 'Sair'                )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$desenvolvimento" == "1" ]; then
 	clear
@@ -338,7 +338,7 @@ desenvolvimento=$(
 	elif [ "$desenvolvimento" == "8" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -359,7 +359,7 @@ aparencia=$(
 	    4 'Voltar' \
             0 'Sair'                )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$aparencia" == "1" ]; then
 	clear
@@ -379,7 +379,7 @@ aparencia=$(
 	elif [ "$aparencia" == "4" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -399,7 +399,7 @@ temas=$(
 	    3 'Theme Numix Frost' \
 	    4 'Voltar'   )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$temas" == "1" ]; then
 	clear
@@ -419,10 +419,10 @@ temas=$(
 	echo; echo "-> Precione enter para continuar"; read
 	temas
 
-	elif [ "$tic" == "4" ]; then
+elif [ "$temas" == "4" ]; then
 	clear
-	tic
-else 
+	programas
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -442,7 +442,7 @@ icones=$(
 	    3 'Vibrancy Colors Icon' \
 	    4 'Voltar' )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$icones" == "1" ]; then
 	clear
@@ -465,7 +465,7 @@ icones=$(
 	elif [ "$icones" == "4" ]; then
 	clear
 	tic
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -485,7 +485,7 @@ cursor=$(
 	    3 'Breeze Hacked Cursor' \
 	    4 'Voltar' )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$cursor" == "1" ]; then
 	clear
@@ -508,7 +508,7 @@ cursor=$(
 	elif [ "$cursor" == "4" ]; then
 	clear
 	tic
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -530,7 +530,7 @@ imagemvideo=$(
 	    8 'Voltar' \
 	    0 'Sair'	 )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$imagemvideo" == "1" ]; then
 	clear
@@ -559,7 +559,7 @@ imagemvideo=$(
 	elif [ "$imagemvideo" == "8" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -579,7 +579,7 @@ office=$(
 	    8 'Voltar' \
 	    0 'Sair' )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$office" == "1" ]; then
 	clear
@@ -596,7 +596,7 @@ office=$(
 	elif [ "$office" == "8" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -616,7 +616,7 @@ vm=$(
 	    8 'Voltar' \
 	    0 'Sair' 	)
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$vm" == "1" ]; then
 	clear
@@ -633,7 +633,7 @@ vm=$(
 	elif [ "$vm" == "8" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -664,7 +664,7 @@ outros=$(
 	    14 'Voltar' \
             0  'Sair'                )
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$outros" == "1" ]; then
 	clear
@@ -747,7 +747,7 @@ outros=$(
 	elif [ "$outros" == "14" ]; then
 	clear
 	programas
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
@@ -778,22 +778,22 @@ opcao=$(
 
 	opcao=$opcao
 
-	[ $? -ne 0 ] && break
+	[ $? -ne 0 ] && return
 
 	if [ "$opcao" == "1" ]; then
 	root
 	clear
-	cd src
+	(cd src || exit
 	sh install.sh
-	cd ..
-	
+	)
+
 	menu
 
 	elif [ "$opcao" == "2" ]; then
 	noroot
-	cd src
+	(cd src || exit
 	sh installyaourt.sh
-	cd ..
+	)
 
 	menu
 
@@ -805,7 +805,7 @@ opcao=$(
 	noroot
 	clear
 	yaourt -Syua --noconfirm
-	echo; echo "-> Precione enter para prosseguir..."	
+	echo; echo "-> Precione enter para prosseguir..."
 	read
 	menu
 
@@ -813,7 +813,7 @@ opcao=$(
 	noroot
 	clear
 	yaourt -Scc
-	echo; echo "-> Precione enter para prosseguir..."	
+	echo; echo "-> Precione enter para prosseguir..."
 	read
 	menu
 
@@ -878,7 +878,7 @@ opcao=$(
 	menu
 
 	elif [ "$opcao" == "0" ]; then
-	echo "Saindo do programa..."	
+	echo "Saindo do programa..."
 	exit
 
 	menu
@@ -889,8 +889,8 @@ opcao=$(
 	#                                                                      #\n
 	#        ALT Project - Arch Linux Post Installation (alpi)             #\n
 	#                                                                      #\n
-	########################################################################\n	
-	\n	
+	########################################################################\n
+	\n
       	\n
 	Arch Linux Post Installation (alpi), e uma ferramenta que permite facilitar a
 	configuracao do sistema Arch Linux apos a sua instalacao. Focada para iniciantes
@@ -907,9 +907,8 @@ opcao=$(
 	menu
 
 
-else 
+else
 echo 'Saindo do programa...'
 fi
 }
 menu
-
