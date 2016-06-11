@@ -783,17 +783,15 @@ opcao=$(
 	if [ "$opcao" == "1" ]; then
 	root
 	clear
-	(cd src || exit
+	cd src/
 	sh install.sh
-	)
 
 	menu
 
 	elif [ "$opcao" == "2" ]; then
 	noroot
-	(cd src || exit
+	cd src/
 	sh installyaourt.sh
-	)
 
 	menu
 
