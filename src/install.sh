@@ -2,24 +2,23 @@
 ##################################################
 # Name: Arch Linux Post Installation (alpi)
 # Description: Pos Instalacao para Arch Linux
-# Script Maintainer: ALT Project
-#
+# Script Maintainer: Tiago R. Lampert
 ##################################################
 #
-NAME="Arch Linux Post Installation (alpi)"
-VERSION="0.8 Beta"
+NAME="Arch Linux Post Installation (ALPI)"
+VERSION=" Versao 1.1.0"
+
 if [ "`whoami`" != "root" ];
 then
-clear
-echo ""
-echo "--- :( ----------------------------------------------"
-echo ""
-echo "    Voce precisa ser root para continuar."
-echo ""
-exit 1
+  clear
+  echo ""
+  echo "--- :( ----------------------------------------------"
+  echo ""
+  echo "    Voce precisa ser root para continuar."
+  echo ""
+  exit 1
 fi
 
-#CONFIGURACAO PADRAO - IDIOMA PT-BR - TECLADO ABNT2 - GNOME - Driver de Video Intel
 #TECLADO
 dialog --yesno 'Deseja alterar a Linguagem do teclado?' 0 0
 if [ $? = 0 ]; then
@@ -27,25 +26,25 @@ if [ $? = 0 ]; then
 keyboard=$( dialog --stdout --menu 'Alterar linguagem do teclado:' 0 0 0 X 'Manter a Linguagem atual' pt_BR 'Definir Portugues BR' + 'Definir manualmente' )
 
 if [ "$keyboard" == "X" ]; then
-dialog	\
---title 'Informacao!'	\
---msgbox 'Foi mantido sua linguagem atual.'	\
-6 40
+  dialog	\
+  --title 'Informacao!'	\
+  --msgbox 'Foi mantido sua linguagem atual.'	\
+  6 40
 
 elif [ "$keyboard" == "pt_BR" ]; then
-clear
-LOCALEGEN="/etc/locale.gen"
+  clear
+  LOCALEGEN="/etc/locale.gen"
 if [ -e "$LOCALEGEN" ] ; then
- echo "-> Atualizando layout do teclado..."
- cat /etc/locale.gen | grep -v "pt_BR.UTF-8 UTF-8" > /etc/locale.tmp
- rm -f /etc/locale.gen
- mv /etc/locale.tmp /etc/locale.gen
- echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
- locale-gen
+  echo "-> Atualizando layout do teclado..."
+  cat /etc/locale.gen | grep -v "pt_BR.UTF-8 UTF-8" > /etc/locale.tmp
+  rm -f /etc/locale.gen
+  mv /etc/locale.tmp /etc/locale.gen
+  echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen
 else
- echo "-> Criando configuracoes para pt_BR..."
- echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
- locale-gen
+  echo "-> Criando configuracoes para pt_BR..."
+  echo "pt_BR.UTF-8 UTF-8" >> /etc/locale.gen
+  locale-gen
 fi
 
 dialog	\
@@ -81,7 +80,7 @@ dialog	\
 elif [ "$language" == "pt_BR" ]; then
 clear
 LOCALECONF="/etc/locale.conf"
- if [ -e "$LOCALECONF" ] ; then
+  if [ -e "$LOCALECONF" ] ; then
 	clear
 	echo "-> Atualizando configuracoes para pt_BR..."
 	cat /etc/locale.conf | grep -v LANG=pt_BR.UTF-8 > /etc/locale.tmp
@@ -160,10 +159,10 @@ hostname=$(dialog --stdout \
 	    --inputbox 'Informe um nome para a sua maquina: ' 10 50)
 clear
 if [ "$hostname" ==  "" ]; then
-set_hostname
+  set_hostname
 
 else
-echo $hostname > /etc/hostname
+  echo $hostname > /etc/hostname
 fi
 }
 
@@ -196,6 +195,17 @@ if [ $? = 0 ]; then
 createuser
 fi
 
+passwdroot(){
+  echo "Informe a senha de root: "
+  passwd root
+}
+
+dialog --yesno 'Deseja criar ou alterar a senha de root?' 0 0
+if [ $? = 0 ]; then
+clear
+passwdroot
+fi
+
 #Instala pacotes base de video
 clear
 base_video(){
@@ -218,111 +228,126 @@ fi
 
 #Instalar DE
 deinstall(){
-
 de=$(
       dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Ambiente de Trabalho'  \
              --menu 'Selecione um Ambiente de Trabalho para instalar:' \
             0 0 0                   \
-            1 'GNOME' \
+      1 'GNOME' \
 	    2 'KDE' \
 	    3 'Xfce' \
 	    4 'Cinnamon' \
 	    5 'Mate' \
-            0 'Sair'   )
+      0 'Continuar'   )
 
 	[ $? -ne 0 ] && return
 
 if [ "$de" == "1" ]; then
-clear
-echo "Instalando GNOME..."
-pacman -S gnome --needed --noconfirm
-pacman -S gedit-plugins gnome-tweak-tool gnome-power-manager gucharmap gvfs-goa --needed --noconfirm
-systemctl enable gdm.service
-deinstall
+  clear
+  echo "Instalando GNOME..."
+  pacman -S gnome --needed --noconfirm
+  pacman -S gedit-plugins gnome-tweak-tool gnome-power-manager gucharmap gvfs-goa --needed --noconfirm
+  systemctl enable gdm.service
+  deinstall
 
 elif [ "$de" == "2" ]; then
-clear
-echo "Instalando KDE..."
-pacman -S plasma plasma-meta plasma-desktop kde-applications breeze-gtk kde-gtk-config --needed --noconfirm
-systemctl enable sddm
+  clear
+  echo "Instalando KDE..."
+  pacman -S plasma plasma-meta plasma-desktop kde-applications breeze-gtk kde-gtk-config --needed --noconfirm
+  systemctl enable sddm
 
 elif [ "$de" == "3" ]; then
-clear
-echo "Instalando Xfce..."
-pacman -S xfce4 xfce4-goodies xarchiver mupdf --needed --noconfirm
-echo "exec start xfce4" >> ~/.xinitrc
-pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
-systemctl enable lightdm.service
+  clear
+  echo "Instalando Xfce..."
+  pacman -S xfce4 xfce4-goodies xarchiver mupdf --needed --noconfirm
+  echo "exec start xfce4" >> ~/.xinitrc
+  pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
+  systemctl enable lightdm.service
 
 elif [ "$de" == "4" ]; then
-clear
-echo "Instalando Cinnamon..."
-pacman -S cinnamon --needed --noconfirm
-echo "exec cinnamon-session" >> ~/.xinitrc
-pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
-systemctl enable lightdm.service
+  clear
+  echo "Instalando Cinnamon..."
+  pacman -S cinnamon --needed --noconfirm
+  echo "exec cinnamon-session" >> ~/.xinitrc
+  pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
+  systemctl enable lightdm.service
 
 elif [ "$de" == "5" ]; then
-clear
-echo "Instalando Mate..."
-pacman -S mate mate-extra --needed --noconfirm
-echo "exec mate-session" >> ~/.xinitrc
-pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
-systemctl enable lightdm.service
+  clear
+  echo "Instalando Mate..."
+  pacman -S mate mate-extra --needed --noconfirm
+  echo "exec mate-session" >> ~/.xinitrc
+  pacman -S lightdm lightdm-gtk-greeter --needed --noconfirm
+  systemctl enable lightdm.service
 
 fi
 }
 
 dialog --yesno 'Deseja instalar algum Ambiente de Trabalho?' 0 0
 if [ $? = 0 ]; then
-deinstall
+  deinstall
 fi
 
 #Network
-wifi(){
-clear
-echo "Instalando e configurando suporte a Wireless"
-pacman -S --needed networkmanager network-manager-applet --noconfirm
-systemctl enable NetworkManager.service
-systemctl start NetworkManager.service
+network(){
+  clear
+  echo "Instalando e configurando suporte a Rede e Wireless"
+  pacman -S --needed networkmanager network-manager-applet --noconfirm
+  systemctl enable NetworkManager.service
+  systemctl start NetworkManager.service
+  systemctl enable dhcpcd
 }
+  network
 
-dialog --yesno 'Deseja instalar e configurar o suporte a Wireless?' 0 0
-if [ $? = 0 ]; then
-wifi
-fi
-
-#Basic
+#Programas Basicos
 prog_basic(){
-echo "Instalando programas basicos..."
-pacman -S --needed vim nano mlocate guake git wget dialog openssh --noconfirm
-pacman -S --needed firefox gst-libav gst-plugins-good upower --noconfirm
-pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools --noconfirm
-pacman -S --needed vlc smplayer screenfetch --noconfirm
+  echo "Instalando programas basicos..."
+  pacman -S --needed vim nano mlocate guake git wget dialog openssh terminator --needed --noconfirm
+  pacman -S --needed firefox gst-libav gst-plugins-good upower --needed --noconfirm
+  pacman -S --needed file-roller gst-libav p7zip unrar unace lrzip cdrkit samba gnome-tweak-tool gparted gedit qt4 vde2 net-tools --needed --noconfirm
+  pacman -S --needed vlc smplayer screenfetch adobe-source-code-pro-fonts gdm3setup archlinux-artwork --needed --noconfirm
 }
 
 dialog --yesno 'Deseja instalar alguns programas basicos? (... vim, nano, firefox, vlc, smplayer, git)' 0 0
 if [ $? = 0 ]; then
-clear
-prog_basic
+  clear
+  prog_basic
+fi
+
+#CUPS
+dialog --yesno 'Deseja instalar CUPS?' 0 0
+if [ $? = 0 ]; then
+  clear
+  # Install packages
+  pacman -S cups ghostscript gsfonts samba --noconfirm --needed
+
+  # Enable services
+  systemctl enable org.cups.cupsd.service
+  systemctl start org.cups.cupsd.service
+
+  systemctl enable cups-browsed.service
+  systemctl start cups-browsed.service
+
+  # List services
+  systemctl list-units --type=service | grep cups
 fi
 
 #Libre Office
 dialog --yesno 'Deseja instalar LibreOffice?' 0 0
 if [ $? = 0 ]; then
-clear
-pacman -S --needed libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
+  clear
+  pacman -S --needed libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
 fi
 
 #Suport Not Intel & Touchpad
 dialog --yesno 'Deseja Instalar Driver de video Intel e driver para Touchpad?' 0 0
 if [ $? = 0 ]; then
-clear
-pacman -S --needed xf86-input-synaptics --noconfirm
-pacman -S --needed xf86-video-intel --noconfirm
+  clear
+  pacman -S --needed xf86-input-synaptics --noconfirm
+  pacman -S --needed xf86-video-intel --noconfirm
 fi
+
 
 #Suport Disk
 clear
@@ -338,32 +363,39 @@ pacman -U *.pkg.tar.xz --noconfirm
 #VirtualBox
 dialog --yesno 'Deseja Instalar o VirtualBox?' 0 0
 if [ $? = 0 ]; then
-clear
-pacman -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox-sdk virtualbox-host-dkms --noconfirm
-pacman -S virtualbox-guest-dkms --needed --noconfirm
-pacman -S linux-headers --needed
-
-#Verificando se existe o arquivo de configuracao do virtualbox
-FILE="/etc/modules-load.d/virtualbox.conf"
-if [ -e "$FILE" ] ; then
-echo "-> Arquivo existe.."
-echo "-> Removendo arquivo.."
-rm -f /etc/modules-load.d/virtualbox.conf
-echo "-> Atualizando arquivo..."
-echo "vboxdrv" >> /etc/modules-load.d/virtualbox.conf
-echo "vboxnetadp" >> /etc/modules-load.d/virtualbox.conf
-echo "vboxnetflt" >> /etc/modules-load.d/virtualbox.conf
-echo "vboxpci" >> /etc/modules-load.d/virtualbox.conf
-gpasswd -a $USER vboxusers
-else
-echo "-> Nao existe arquivo de configuracao do virtualbox"
-echo "-> Criando arquivo..."
-echo "vboxdrv" >> /etc/modules-load.d/virtualbox.conf
-echo "vboxnetadp" >> /etc/modules-load.d/virtualbox.conf
-echo "vboxnetflt" >> /etc/modules-load.d/virtualbox.conf
-echo "vboxpci" >> /etc/modules-load.d/virtualbox.conf
-modprobe vboxdrv
-/sbin/rcvboxdrv setup
-gpasswd -a $USER vboxusers
+  clear
+  pacman -S linux-headers --needed --noconfirm
+  pacman -S virtualbox virtualbox-host-modules-arch virtualbox-guest-iso  --needed --noconfirm
+  modprobe vboxdrv
+  gpasswd -a $USER vboxusers
 fi
+
+# Install ZSH + Oh-My-ZSH + Powerline Theme
+dialog --yesno 'Deseja Instalar Oh-My-ZSH com Powerline Theme? AVISO! ZSH sera definido como seu shell padrao!' 0 0
+if [ $? = 0 ]; then
+  clear
+  # Copy config Terminator
+  cp -R terminator /root/.config/
+
+  # Install Powerline Fonts
+  git clone https://github.com/powerline/fonts.git
+  cd fonts/
+  sh install.sh
+  cd ..
+  rm -fR fonts
+
+  # Install ZSH
+  echo "Instalando ZSH..."
+  pacman -S zsh zsh-lovers powerline powerline-common --needed --noconfirm
+  pacman -S adobe-source-code-pro-fonts --needed --noconfirm
+
+  # Verifica se e root e instala ZSH em /root
+  if [ "`whoami`" == "root" ];
+  then
+    # ZSH Default Shell
+    usermod -s /bin/zsh root
+    cp zsh.tar /root/ ; cd /root/
+    tar -xvf zsh.tar
+    rm -f zsh.tar
+  fi
 fi

@@ -2,12 +2,63 @@
 ##################################################
 # Name: Arch Linux Post Installation (alpi)
 # Description: Pos Instalacao para Arch Linux
-# Script Maintainer: ALT Project
-#
+# Script Maintainer: Tiago R. Lampert
 ##################################################
 #
-NAME="Arch Linux Post Installation (alpi)"
-VERSION="0.8 Beta"
+NAME="Arch Linux Post Installation (ALPI)"
+VERSION=" Versao 1.1.0"
+
+# Show Logo
+logo(){
+  dialog	\
+  --backtitle "$NAME - $VERSION" \
+  --title 'Arch Linux Post Installation'	\
+  --infobox '\n
+                    -`\n
+                   .o+`\n
+                  `ooo/\n
+                 `+oooo:\n
+                `+oooooo:\n
+                -+oooooo+:\n
+              `/:-:++oooo+:\n
+             `/++++/+++++++:\n
+            `/++++++++++++++:\n
+           `/+++ooooooooooooo/`\n
+          ./ooosssso++osssssso+`\n
+         .oossssso-````/ossssss+`\n
+        -osssssso.      :ssssssso.\n
+       :osssssss/        osssso+++.\n
+      /ossssssss/        +ssssooo/-\n
+    `/ossssso+/:-        -:/+osssso+-\n
+   `+sso+:-`                 `.-/+oso:\n
+  `++:.                           `-/+/\n
+  .`
+  '	\
+  0 0  && sleep 3
+}
+
+logo
+
+# Verifica se existe conexao com a internet
+test_network(){
+dialog --backtitle "$NAME - $VERSION" --title " Informacao!" --infobox " \nVerificando conexao..." 0 0 && sleep 2
+while [[ ! $(ping -c1 8.8.8.8) ]]; do
+dialog	\
+--title 'Aviso!'	\
+--msgbox '  Nao foi possivel conectar-se a internet..
+  Por favor Verifique sua conexão!
+
+  AVISO! Caso deseje continuar, algumas coisas
+  poderão não funcionar corretamente!'	\
+9 55
+clear
+break
+done
+clear
+}
+test_network
+clear
+
 #Verificando se o pacman esta sendo usado por outro processo
 clear
 FILE="/var/lib/pacman/db.lck"
@@ -71,13 +122,12 @@ exit 1
 fi
 }
 
-echo "-> Iniciando aplicacao..."
-echo "-> Verificando dependencias..."
+echo "-> [OK] Verificando dependencias..."
 
 #Verifica se e root para usar pacman
 if [ "$(id -u)" == "0" ]; then
 pacman -Sy --noconfirm
-pacman -S --needed dialog wget --noconfirm
+pacman -S --needed dialog wget sudo --noconfirm
 cd src
 echo "-> Instalando Yaourt..."
 pacman -U *.pkg.tar.xz --noconfirm
@@ -91,667 +141,69 @@ yaourt -Sy --noconfirm
 yaourt -S --needed dialog --noconfirm
 echo "-> Voce nao esta executando como root."
 else
-sudo pacman -S --needed wget dialog --noconfirm
+sudo pacman -S --needed wget dialog sudo --noconfirm
 yaourtinstall
 yaourt -Sy --noconfirm
 yaourt -S --needed dialog --noconfirm
 fi
 
-#PROGRAMAS
-programas(){
+echo "-> [OK] Iniciando aplicacao..."
 
-programas=$(
+#Instalar Bootloader
+bootloader_install(){
+bl=$(
       dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
-             --title 'Instalar Programas'  \
-             --menu 'Selecione a categoria:' \
+             --title 'Bootloader'  \
+             --menu 'Selecione um Bootloader para instalar:' \
             0 0 0                   \
-            1 'Internet' \
-	    2 'Multimidia' \
-	    3 'Desenvolvimento' \
-	    4 'Aparencia e Personalizacao' \
-	    5 'Imagem e Video' \
-	    6 'Escritorio' \
-	    7 'Virtualizacao e Containers' \
-            8 'Outros' \
-	    9 'Voltar' \
-            0 'Sair'                )
-
-	programas=$programas
+      1 'GRUB BIOS-MBR' \
+	    2 'GRUB  UEFI-GPT' \
+	    3 'rEFInd  UEFI-GPT' \
+      4 'Voltar' \
+      0 'Sair'   )
 
 	[ $? -ne 0 ] && return
 
-	if [ "$programas" == "1" ]; then
-	internet
+if [ "$bl" == "1" ]; then
+  clear
+  echo "Instalando GRUB - BIOS..."
+  sudo pacman -Sy; sudo pacman -S --needed grub os-prober --noconfirm
+  sudo grub-install /dev/sda
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+  sudo mkinitcpio -p linux
+  echo ""
+  echo "Precione enter para voltar ao menu..."
+  pause
+  menu
 
-	elif [ "$programas" == "2" ]; then
-	multimidia
+elif [ "$bl" == "2" ]; then
+  clear
+  echo "Instalando GRUB - UEFI..."
+  sudo pacman -Sy; sudo pacman -S --needed grub efibootmgr os-prober --noconfirm
+  sudo grub-install --target=x86_64-efi --efi-directory=boot --bootloader-id=arch_grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
+  sudo mkinitcpio -p linux
+  echo ""
+  echo "Precione enter para voltar ao menu..."
+  pause
+  menu
 
-	elif [ "$programas" == "3" ]; then
-	desenvolvimento
+elif [ "$bl" == "3" ]; then
+  clear
+  echo "Instalando rFind - UEFI..."
+  sudo pacman -Sy; pacman -S --needed refind-efi efibootmgr --noconfirm
+  sudo refind-install
+  echo ""
+  echo "Precione enter para voltar ao menu..."
+  pause
+  menu
 
-	elif [ "$programas" == "4" ]; then
-	aparencia
+elif [ "$bl" == "4" ]; then
+  menu
 
-	elif [ "$programas" == "5" ]; then
-	imagemvideo
-
-	elif [ "$programas" == "6" ]; then
-	office
-
-	elif [ "$programas" == "7" ]; then
-	vm
-
-	elif [ "$programas" == "8" ]; then
-	outros
-
-	elif [ "$programas" == "9" ]; then
-	menu
-else
-echo 'Saindo do programa...'
 fi
 }
-menu
-
-#MULTIMIDIA
-multimidia(){
-
-multimidia=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Multimidia'  \
-             --menu 'Selecione o programa para instalar:' \
-            0 0 0                   \
-            1 'VLC' \
-	    2 'SMPlayer' \
-	    3 'Rhythmbox' \
-	    4 'Audacity' \
-	    6 'Voltar' \
-            0 'Sair'                )
-
-	multimidia=$multimidia
-
-	[ $? -ne 0 ] && return
-
-	if [ "$multimidia" == "1" ]; then
-	clear
-	yaourt -S --needed vlc --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	multimidia
-
-	elif [ "$multimidia" == "2" ]; then
-	clear
-	yaourt -S --needed smplayer --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	multimidia
-
-	elif [ "$multimidia" == "3" ]; then
-	clear
-	yaourt -S --needed rhythmbox-git --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	multimidia
-
-	elif [ "$multimidia" == "4" ]; then
-	clear
-	yaourt -S --needed audacity --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	multimidia
-
-	elif [ "$multimidia" == "6" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#INTERNET
-internet(){
-
-internet=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Internet'  \
-             --menu 'Selecione o programa para instalar:' \
-            0 0 0                   \
-            1 'Mozilla Firefox' \
-	    2 'Google Chrome' \
-	    3 'Chromium' \
-	    4 'Iceweasel' \
-	    5 'Opera' \
-	    6 'Mozilla Thunderbird' \
-	    7 'Voltar' \
-            0 'Sair'                )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$internet" == "1" ]; then
-	clear
-	yaourt -S --needed firefox firefox gst-libav gst-plugins-good upower --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	internet
-
-	elif [ "$internet" == "2" ]; then
-	clear
-	yaourt -S google-chrome --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	internet
-
-	elif [ "$internet" == "3" ]; then
-	clear
-	yaourt -S --needed chromium --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	internet
-
-	elif [ "$internet" == "4" ]; then
-	clear
-	yaourt -S --needed iceweasel --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	internet
-
-	elif [ "$internet" == "5" ]; then
-	clear
-	yaourt -S --needed opera --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	internet
-
-	elif [ "$internet" == "6" ]; then
-	clear
-	yaourt -S --needed thunderbird --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	internet
-
-	elif [ "$internet" == "7" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#DESENVOLVIMENTO
-desenvolvimento(){
-
-desenvolvimento=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Desenvolvimento'  \
-             --menu 'Selecione o programa para instalar:' \
-            0 0 0                   \
-            1 'Atom Editor' \
-	    2 'Netbeans' \
-	    3 'Sublime Text' \
-	    4 'Eclipse' \
-	    5 'Android Studio' \
-	    6 'MySQL Workbench' \
-	    7 'Code::Blocks' \
-	    8 'Voltar' \
-            0 'Sair'                )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$desenvolvimento" == "1" ]; then
-	clear
-	yaourt -S atom-editor --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	desenvolvimento
-
-	elif [ "$desenvolvimento" == "2" ]; then
-	clear
-	yaourt -S --needed netbeans --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	desenvolvimento
-
-	elif [ "$desenvolvimento" == "3" ]; then
-	clear
-	yaourt -S sublime-text --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	desenvolvimento
-
-	elif [ "$desenvolvimento" == "4" ]; then
-	clear
-	yaourt -S --needed eclipse --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	desenvolvimento
-
-	elif [ "$desenvolvimento" == "5" ]; then
-	clear
-	yaourt -S android-studio jdk --noconfirm
-	archlinux-java set java-8-jdk
-	echo; echo "-> Precione enter para continuar"; read
-	desenvolvimento
-
-	elif [ "$desenvolvimento" == "6" ]; then
-	clear
-	yaourt -S --needed mysql-workbench --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	desenvolvimento
-
-	elif [ "$desenvolvimento" == "7" ]; then
-	clear
-	yaourt -S --needed codeblocks --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	desenvolvimento
-
-	elif [ "$desenvolvimento" == "8" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#APARENCIA E PERSONALIZACAO
-aparencia(){
-
-aparencia=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Aparencia e Personalizacao'  \
-             --menu 'Selecione a categoria para prosseguir:' \
-            0 0 0                   \
-            1 'Temas' \
-	    2 'Icones' \
-	    3 'Cursores' \
-	    4 'Voltar' \
-            0 'Sair'                )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$aparencia" == "1" ]; then
-	clear
-	temas
-	aparencia
-
-	elif [ "$aparencia" == "2" ]; then
-	clear
-	icones
-	aparencia
-
-	elif [ "$aparencia" == "3" ]; then
-	clear
-	cursor
-	aparencia
-
-	elif [ "$aparencia" == "4" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#TEMAS
-temas(){
-
-temas=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Temas'  \
-             --menu 'Selecione o tema para instalar:' \
-            0 0 0                   \
-            1 'Theme Arc' \
-	    2 'Theme Numix' \
-	    3 'Theme Numix Frost' \
-	    4 'Voltar'   )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$temas" == "1" ]; then
-	clear
-	yaourt -S gtk-theme-arc-git --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	temas
-
-	elif [ "$temas" == "2" ]; then
-	clear
-	yaourt -S --needed numix-themes --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	temas
-
-	elif [ "$temas" == "3" ]; then
-	clear
-	yaourt -S --needed numix-frost-themes --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	temas
-
-elif [ "$temas" == "4" ]; then
-	clear
-	aparencia
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#ICONES
-icones(){
-
-icones=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Icones'  \
-             --menu 'Selecione o icone para instalar:' \
-            0 0 0                   \
-            1 'Numix Icon' \
-	    2 'Numix Circle Icon' \
-	    3 'Vibrancy Colors Icon' \
-	    4 'Voltar' )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$icones" == "1" ]; then
-	clear
-	yaourt -S numix-icon-theme-git --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	icones
-
-	elif [ "$icones" == "2" ]; then
-	clear
-	yaourt -S numix-circle-icon-theme-git --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	icones
-
-	elif [ "$icones" == "3" ]; then
-	clear
-	yaourt -S vibrancy-colors --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	icones
-
-	elif [ "$icones" == "4" ]; then
-	clear
-	temas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#CURSOR
-cursor(){
-
-cursor=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Cursores'  \
-             --menu 'Selecione o cursor para instalar:' \
-            0 0 0                   \
-            1 'Breeze Obsidian Cursor' \
-	    2 'Breeze Snow Cursor' \
-	    3 'Breeze Hacked Cursor' \
-	    4 'Voltar' )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$cursor" == "1" ]; then
-	clear
-	yaourt -S breeze-obsidian-cursor-theme --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	cursor
-
-	elif [ "$cursor" == "2" ]; then
-	clear
-	yaourt -S breeze-snow-cursor-theme --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	cursor
-
-	elif [ "$cursor" == "3" ]; then
-	clear
-	yaourt -S breeze-hacked-cursor-theme --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	cursor
-
-	elif [ "$cursor" == "4" ]; then
-	clear
-	temas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#IMAGEM E VIDEO
-imagemvideo(){
-
-imagemvideo=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Imagem e Video'  \
-             --menu 'Selecione o programa para instalar:' \
-            0 0 0                   \
-            1 'Inkscape' \
-	    2 'Gimp' \
-	    3 'Blender' \
-	    4 'Kdenlive' \
-	    8 'Voltar' \
-	    0 'Sair'	 )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$imagemvideo" == "1" ]; then
-	clear
-	yaourt -S --needed inkscape --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	imagemvideo
-
-	elif [ "$imagemvideo" == "2" ]; then
-	clear
-	yaourt -S --needed gimp --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	imagemvideo
-
-	elif [ "$imagemvideo" == "3" ]; then
-	clear
-	yaourt -S --needed blender --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	imagemvideo
-
-	elif [ "$imagemvideo" == "4" ]; then
-	clear
-	yaourt -S --needed kdenlive --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	imagemvideo
-
-	elif [ "$imagemvideo" == "8" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#ESCRITORIO
-office(){
-
-office=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Escritorio'  \
-             --menu 'Selecione o programa para instalar:' \
-            0 0 0                   \
-            1 'LibreOffice' \
-	    2 'WPS Office' \
-	    8 'Voltar' \
-	    0 'Sair' )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$office" == "1" ]; then
-	clear
-	pacman -S --needed libreoffice-fresh libreoffice-fresh-pt-BR --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	office
-
-	elif [ "$office" == "2" ]; then
-	clear
-	yaourt -S --needed wps-office wps-office-extension-portuguese-brazilian-dictionary --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	office
-
-	elif [ "$office" == "8" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#VIRTUALIZACAO
-vm(){
-
-vm=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Virtualizacao e Containers'  \
-             --menu 'Selecione o programa para instalar:' \
-            0 0 0                   \
-            1 'VirtualBox' \
-	    2 'Docker' \
-	    8 'Voltar' \
-	    0 'Sair' 	)
-
-	[ $? -ne 0 ] && return
-
-	if [ "$vm" == "1" ]; then
-	clear
-	yaourt -S --needed virtualbox virtualbox-guest-iso virtualbox-ext-vnc virtualbox-sdk virtualbox-host-dkms virtualbox-host-modules --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	vm
-
-	elif [ "$vm" == "2" ]; then
-	clear
-	yaourt -S --needed docker --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	vm
-
-	elif [ "$vm" == "8" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
-
-#OUTROS
-outros(){
-
-outros=$(
-      dialog --backtitle "$NAME - $VERSION" \
-	     --stdout               \
-             --title 'Outros'  \
-             --menu 'Selecione o programa para instalar:' \
-            0 0 0                   \
-            1  'Teamviewer' \
-	    2  'AnyDesk' \
-	    3  'Java JRE' \
-	    4  'JDK' \
-	    5  'Flareget' \
-	    6  'Skype' \
-	    7  'qbittorrent' \
-	    8  'Remmina' \
-	    9  'PlayOnLinux' \
-	    10 'Terminator' \
-	    11 'Gparted' \
-	    12 'Terminix' \
-	    13 'GDM 3 Setup'	\
-	    14 'Voltar' \
-            0  'Sair'                )
-
-	[ $? -ne 0 ] && return
-
-	if [ "$outros" == "1" ]; then
-	clear
-	yaourt -S --needed teamviewer --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "2" ]; then
-	clear
-	yaourt -S --needed anydesk --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "3" ]; then
-	clear
-	yaourt -S jre --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "4" ]; then
-	clear
-	yaourt -S jdk --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "5" ]; then
-	clear
-	yaourt -S flareget --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "6" ]; then
-	clear
-	yaourt -S skype --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "7" ]; then
-	clear
-	yaourt -S qbittorrent --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "8" ]; then
-	clear
-	yaourt -S remmina --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "9" ]; then
-	clear
-	yaourt -S --needed playonlinux --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "10" ]; then
-	clear
-	yaourt -S --needed terminator --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "11" ]; then
-	clear
-	yaourt -S --needed gparted --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "12" ]; then
-	clear
-	yaourt -S --needed terminix-git --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "13" ]; then
-	clear
-	yaourt -S --needed gdm3setup archlinux-artwork --noconfirm
-	echo; echo "-> Precione enter para continuar"; read
-	outros
-
-	elif [ "$outros" == "14" ]; then
-	clear
-	programas
-else
-echo 'Saindo do programa...'
-fi
-}
-menu
 
 #MENU
 menu(){
@@ -760,21 +212,21 @@ opcao=$(
       dialog --backtitle "$NAME - $VERSION" \
 	     --stdout               \
              --title 'Menu'  \
-             --menu 'Selecione a opcao:' \
+             --menu 'Selecione uma opcao:' \
             0 0 0                   \
-            1  'Instalacao basica padrao [PACMAN] (#ROOT)' \
-	    2  'Instalacao completa padrao [YAOURT] ($NO-ROOT)' \
-	    3  'Central de Programas' \
-	    4  'Verificar Atualizacao do Sistema' \
-	    5  'Limpar Cache e arquivos temporarios' \
-	    6  'Instalar' \
-	    7  'Desinstalar' \
-	    8  'Desinstalar com dependencias' \
-	    9  'Buscar' \
-	    10 'Status do Yaourt' \
+      1  'Instalacao padrao [PACMAN] (#ROOT)' \
+	    2  'Instalacao adicional [YAOURT] ($NO-ROOT)' \
+	    3  'Verificar Atualizacao do Sistema' \
+	    4  'Limpar Cache e arquivos temporarios' \
+	    5  'Instalar' \
+	    6  'Desinstalar' \
+	    7  'Desinstalar com dependencias' \
+	    8  'Buscar' \
+	    9  'Status do Yaourt' \
+      10 'Instalar Bootloader' \
 	    11 'Reiniciar' \
 	    12 'Sobre'	\
-            0  'Sair'                )
+      0  'Sair'                )
 
 	opcao=$opcao
 
@@ -795,11 +247,7 @@ opcao=$(
 
 	menu
 
-	elif [ "$opcao" == "3" ]; then
-	noroot
-	programas
-
-    	elif [ "$opcao" == "4" ]; then
+  elif [ "$opcao" == "3" ]; then
 	noroot
 	clear
 	yaourt -Syua --noconfirm
@@ -807,7 +255,7 @@ opcao=$(
 	read
 	menu
 
-    	elif [ "$opcao" == "5" ]; then
+  elif [ "$opcao" == "4" ]; then
 	noroot
 	clear
 	yaourt -Scc
@@ -815,7 +263,7 @@ opcao=$(
 	read
 	menu
 
-	elif [ "$opcao" == "6" ]; then
+  elif [ "$opcao" == "5" ]; then
 	noroot
 	clear
 	programa=$(dialog --stdout \
@@ -826,7 +274,7 @@ opcao=$(
 	echo; echo "-> Precione enter para continuar"; read
 	menu
 
-	elif [ "$opcao" == "7" ]; then
+  elif [ "$opcao" == "6" ]; then
 	noroot
 	clear
 	programa=$(dialog --stdout \
@@ -837,7 +285,7 @@ opcao=$(
 	echo; echo "-> Precione enter para continuar"; read
 	menu
 
-	elif [ "$opcao" == "8" ]; then
+  elif [ "$opcao" == "7" ]; then
 	noroot
 	clear
 	programa=$(dialog --stdout \
@@ -848,7 +296,7 @@ opcao=$(
 	echo; echo "-> Precione enter para continuar"; read
 	menu
 
-	elif [ "$opcao" == "9" ]; then
+  elif [ "$opcao" == "8" ]; then
 	noroot
 	clear
 	programa=$(dialog --stdout \
@@ -859,14 +307,20 @@ opcao=$(
 	echo; echo "-> Precione enter para continuar"; read
 	menu
 
-	elif [ "$opcao" == "10" ]; then
+  elif [ "$opcao" == "9" ]; then
 	noroot
 	clear
 	yaourt --stats
 	echo; echo "-> Precione enter para continuar"; read
 	menu
 
-	elif [ "$opcao" == "11" ]; then
+  elif [ "$opcao" == "10" ]; then
+  clear
+  bootloader_install
+  echo; echo "-> Precione enter para continuar"; read
+  menu
+
+  elif [ "$opcao" == "11" ]; then
 	dialog --yesno 'Tem certeza que deseja reinciar?' 0 0
 	if [ $? = 0 ]; then
 	reboot
@@ -876,21 +330,22 @@ opcao=$(
 	menu
 
 	elif [ "$opcao" == "0" ]; then
-	echo "Saindo do programa..."
+  clear
+	echo "Saindo do ALPI..."
 	exit
 
 	menu
-	elif [ "$opcao" == "12" ]; then
+  elif [ "$opcao" == "12" ]; then
 	dialog --title 'Sobre' --msgbox '\n
 	\n
 	########################################################################\n
 	#                                                                      #\n
-	#        ALT Project - Arch Linux Post Installation (alpi)             #\n
+	#        ALT Project - Arch Linux Post Installation (ALPI)             #\n
 	#                                                                      #\n
 	########################################################################\n
 	\n
       	\n
-	Arch Linux Post Installation (alpi), e uma ferramenta que permite facilitar a
+	Arch Linux Post Installation (ALPI), e uma ferramenta que permite facilitar a
 	configuracao do sistema Arch Linux apos a sua instalacao. Focada para iniciantes
 	na distribuicao e para usuarios experientes que querem automatizar a tarefa de
 	configuracao do sistema.\n
