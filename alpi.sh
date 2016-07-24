@@ -192,7 +192,7 @@ elif [ "$bl" == "2" ]; then
 elif [ "$bl" == "3" ]; then
   clear
   echo "Instalando rFind - UEFI..."
-  sudo pacman -Sy; pacman -S --needed refind-efi efibootmgr --noconfirm
+  sudo pacman -Sy; sudo pacman -S --needed refind-efi efibootmgr --noconfirm
   sudo refind-install
   echo ""
   echo "Precione enter para voltar ao menu..."
@@ -338,24 +338,15 @@ opcao=$(
   elif [ "$opcao" == "12" ]; then
 	dialog --title 'Sobre' --msgbox '\n
 	\n
-	########################################################################\n
-	#                                                                      #\n
-	#        ALT Project - Arch Linux Post Installation (ALPI)             #\n
-	#                                                                      #\n
-	########################################################################\n
-	\n
-      	\n
-	Arch Linux Post Installation (ALPI), e uma ferramenta que permite facilitar a
-	configuracao do sistema Arch Linux apos a sua instalacao. Focada para iniciantes
-	na distribuicao e para usuarios experientes que querem automatizar a tarefa de
-	configuracao do sistema.\n
-	\n
-	\n
-	\n
-	\n
-	\n
-	                    Copyright (c) 2016 ALT Project\n
-	' 25 80
+	 ###########################################################################\n
+	 #                                                                         #\n
+  #                  Arch Linux Post Installation (ALPI)                    #\n
+  #                                                                         #\n
+  # Configure e instale pacotes no Arch Linux facilmente após a instalação! #\n
+  #                                                                         #\n
+  #                                2016                                     #\n
+	 ###########################################################################\n
+	' 15 85
 
 	menu
 
