@@ -27,13 +27,6 @@ ou
 # ./alpi.sh
 ```
 
-### Contato
-Envie um email para trepmalogait@gmail.com
-
-### Licença
-
-**Arch Linux Post Installation (ALPI)** usa licença [GPL Versão 3](LICENSE) presente neste do projeto.
-
 ### Screenshot
 
 ![alpi](https://github.com/tiagorlampert/alpi/blob/master/screenshot/alpi.png)
@@ -45,3 +38,11 @@ Envie um email para trepmalogait@gmail.com
 Opcionalmente pode ser escolhido ZSH como shell no sistema.
 
 ![zsh](https://github.com/tiagorlampert/alpi/blob/master/screenshot/zsh.png)
+
+
+### Contato
+Envie um email para trepmalogait@gmail.com
+
+### Licença
+
+**Arch Linux Post Installation (ALPI)** usa licença [GPL Versão 3](LICENSE) presente neste do projeto.
