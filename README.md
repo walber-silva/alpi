@@ -22,9 +22,9 @@ $ git clone https://github.com/tiagorlampert/alpi.git ; cd alpi
 Então execute o script (Para algumas funcionalidades é necessário que o script não seja executado como root):
 
 ```
-# sh alpi.sh
+sh alpi.sh
 ou
-# ./alpi.sh
+./alpi.sh
 ```
 
 ### Screenshot
