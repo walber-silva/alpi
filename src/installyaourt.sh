@@ -71,7 +71,7 @@ sudo usermod -s /bin/zsh $(whoami)
 echo 'export ZSH=/$HOME/.oh-my-zsh
 ZSH_THEME="powerline"
 # ---------------------------------------------------
-# Git
+# Yaourt
 # ---------------------------------------------------
 alias yy="yaourt -Sy "
 alias yu="yaourt -Syu "
