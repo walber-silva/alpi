@@ -1,4 +1,4 @@
-### Arch Linux Post Installation (ALPI)
+### Arch Linux Post Installation (ALPI) :octocat:
 
 ```
 Configure e instale pacotes no Arch Linux facilmente após a instalação!
