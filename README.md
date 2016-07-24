@@ -3,9 +3,13 @@
 ```
 Configure e instale pacotes no Arch Linux facilmente após a instalação!
 ```
+### Recomendações / Dica
+Você pode testar primeiramente no Virtualbox. :wink:
+
+Após você ter preparado as partições e obtido a base do Arch Linux. Instale o Git: `pacman -Sy git`. Então clone e execute o ALPI!
 
 ### Requisitos
- * `git`
+ * `git*`
  * `wget`
  * `dialog`
  * `yaourt`
