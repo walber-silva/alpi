@@ -11,6 +11,14 @@ Configure e instale pacotes no Arch Linux facilmente após a instalação!
 
 * Então clone e execute o ALPI!
 
+* Você pode configurar completamente seu sistema. Desde idioma, teclado, ambiente de trabalho e pacotes (pacotes basicos serão instalados automaticamente sem pedir confirmação).
+
+* Para configurar seu sistema completamente e deixa-lo pronto para o uso, execute as duas primeiras opções do menu principal:
+```
+1  Instalacao padrao [PACMAN] (#ROOT)
+2  Instalacao adicional [YAOURT] ($NO-ROOT)
+```
+
 ### Como clonar e executar
 Verifique se você possui o Git instalado e Clone o repositório `Arch Linux Post Installation`:
 
