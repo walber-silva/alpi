@@ -157,11 +157,11 @@ bl=$(
              --title 'Bootloader'  \
              --menu 'Selecione um Bootloader para instalar:' \
             0 0 0                   \
-      1 'GRUB BIOS-MBR' \
-	    2 'GRUB  UEFI-GPT' \
-	    3 'rEFInd  UEFI-GPT' \
-      4 'Voltar' \
-      0 'Sair'   )
+	1 'GRUB BIOS-MBR' \
+	2 'GRUB  UEFI-GPT' \
+	3 'rEFInd  UEFI-GPT' \
+	4 'Voltar' \
+	0 'Sair'   )
 
 	[ $? -ne 0 ] && return
 
@@ -214,19 +214,19 @@ opcao=$(
              --title 'Menu'  \
              --menu 'Selecione uma opcao:' \
             0 0 0                   \
-      1  'Instalacao padrao [PACMAN] (#ROOT)' \
-	    2  'Instalacao adicional [YAOURT] ($NO-ROOT)' \
-	    3  'Verificar Atualizacao do Sistema' \
-	    4  'Limpar Cache e arquivos temporarios' \
-	    5  'Instalar' \
-	    6  'Desinstalar' \
-	    7  'Desinstalar com dependencias' \
-	    8  'Buscar' \
-	    9  'Status do Yaourt' \
-      10 'Instalar Bootloader' \
-	    11 'Reiniciar' \
-	    12 'Sobre'	\
-      0  'Sair'                )
+	1  'Instalacao padrao [PACMAN] (#ROOT)' \
+	2  'Instalacao adicional [YAOURT] ($NO-ROOT)' \
+	3  'Verificar Atualizacao do Sistema' \
+	4  'Limpar Cache e arquivos temporarios' \
+	5  'Instalar' \
+	6  'Desinstalar' \
+	7  'Desinstalar com dependencias' \
+	8  'Buscar' \
+	9  'Status do Yaourt' \
+	10 'Instalar Bootloader' \
+	11 'Reiniciar' \
+	12 'Sobre'	\
+	0  'Sair'                )
 
 	opcao=$opcao
 
@@ -338,15 +338,15 @@ opcao=$(
   elif [ "$opcao" == "12" ]; then
 	dialog --title 'Sobre' --msgbox '\n
 	\n
-	 ###########################################################################\n
-	 #                                                                         #\n
-  #                  Arch Linux Post Installation (ALPI)                    #\n
-  #                                                                         #\n
-  # Configure e instale pacotes no Arch Linux facilmente após a instalação! #\n
-  #                                                                         #\n
-  #                                2016                                     #\n
-	 ###########################################################################\n
-	' 15 85
+	###########################################################################\n
+	#                                                                         #\n
+	#                  Arch Linux Post Installation (ALPI)                    #\n
+	#                                                                         #\n
+	# Configure e instale pacotes no Arch Linux facilmente após a instalação! #\n
+	#                                                                         #\n
+	#                                2016                                     #\n
+	###########################################################################\n
+' 15 85
 
 	menu
 
