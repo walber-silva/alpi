@@ -39,6 +39,17 @@ Opcionalmente pode ser escolhido ZSH como shell no sistema.
 
 ![zsh](https://github.com/tiagorlampert/alpi/blob/master/screenshot/zsh.png)
 
+### Instalar Bootloader
+No menu principal, em `Instalar Bootloader` você possui três opções para instalação de Bootloader:
+
+Bootloader | Tabela de partição
+------------ | -------------
+GRUB - BIOS | MBR
+GRUB - UEFI | GPT
+rEFInd - UEFI | GPT
+
+![bootloader](https://github.com/tiagorlampert/alpi/blob/master/screenshot/bootloader.png)
+
 
 ### Contato
 Envie um email para trepmalogait@gmail.com
